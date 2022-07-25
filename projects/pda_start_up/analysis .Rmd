@@ -1,0 +1,115 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+library(tidyr)
+library(tidyverse)
+library(janitor)
+```
+
+Read the cleaned data into R.
+
+```{r}
+clean_mete <- meteorite %>% clean_names()
+#I really don't like "mass(g)", so I cleaned the names here...
+```
+
+Find the names and years found for the 10 largest meteorites in the data.
+
+```{r}
+clean_mete %>% 
+  select(c("name", "year", "mass_g"))%>%
+  slice_max(mass_g, n= 10, with_ties = FALSE )
+#this list returns top 10 with year and mass.  
+```
+
+Find the average mass of meteorites that were recorded falling, vs. those which were just found.
+```{r}
+#3.5 Writing function/program to perform statistical analysis
+clean_mete %>% 
+  group_by(fall) %>% 
+  summarise(average = mean(mass_g, na.rm = TRUE))
+#on average, meteorites fell was a lot bigger than the ones are found.
+```
+
+Find the number of meteorites in each year, for every year since 2000.
+```{r}
+clean_mete %>% 
+  filter(year >= 2000) %>%
+  group_by(year) %>% 
+  summarise(count = n())
+#from 2000 to 2003 there were continuous increasing every year.
+#in general there aren't any clear trend. 
+```
+
+Write a function called get_meteorite_count() that takes in two arguments: a dataframe and a year, and returns the phrase “In (input_year), there were (number of meteorites that year) meteorites.” IF there are 1 or more meteorites that year. If there are no meteorites in the year, return the phrase “As far as we know, there were no meteorites that year”.
+
+```{r}
+get_meteorite_count<- function(d,y){
+  
+  num = d %>% 
+  filter(year == y) %>%
+  summarise(count = n()) %>% 
+  pull()
+  
+  if(num >= 1){
+    return(paste0("In", y, ", there are ", num," meteorites."))
+  }else{
+    if(num < 1){
+    return("As far as we know,there were no meteorites that year")
+  }
+  }
+}
+```
+
+Write down ideas for how the function you’ve written could be improved and how you could test that the function works as it should. Please keep these ‘test plans’ in the final .Rmd, especially if you are completing the PDA.
+```{r}
+#My function didn't think about NA from the data  sets.
+#It will let non_numeric input of years pass.
+
+#I can test with some dataframe contains NA,
+#Test year input as strings and logical.
+
+```
+
+Write a unit test for your function to check whether non-numeric inputs (character and logical) for the year argument return an error.
+```{r}
+#4.1 Test plans 
+library(testthat)
+test_that("Non-numeric input returns an error", {
+  expect_error(get_meteorite_count(clean_mete, "yes"))
+  expect_error(get_meteorite_count(clean_mete, TRUE))
+})
+#My old function didn't pass the test.
+```
+
+Improve your function based on the result of your test. Instead of going back and changing the function, please create a new function that is the improved version called refactor_get_meteorite_count(). Test your function to make sure it now gives an error when you input a logical or character value as the year. Hint: You can use the stop function to create your own error message.
+```{r}
+#4.6 Performing test and revising code
+library(assertr)
+refactor_get_meteorite_count<- function(d,y){
+  stopifnot(is.numeric(y))
+  
+  num = d %>% 
+  filter(year == y) %>%
+  summarise(count = n()) %>% 
+  pull()
+  
+  if(num >= 1){
+    return(paste0("In", y, ", there are ", num," meteorites."))
+  }else{
+    if(num < 1){
+    return("As far as we know,there were no meteorites that year")
+  }
+  }
+}
+```
+
+```{r}
+test_that("Non-numeric input returns an error", {
+  expect_error(refactor_get_meteorite_count(clean_mete, "yes"))
+  expect_error(refactor_get_meteorite_count(clean_mete, TRUE))
+})
+```
