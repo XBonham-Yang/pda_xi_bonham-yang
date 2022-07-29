@@ -1780,61 +1780,105 @@ library(janitor)</code></pre>
 <p>Read the cleaned data into R.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xlYW5fbWV0ZSA8LSBtZXRlb3JpdGUgJT4lIGNsZWFuX25hbWVzKClcbiNJIHJlYWxseSBkb24ndCBsaWtlIFwibWFzcyhnKVwiLCBzbyBJIGNsZWFuZWQgdGhlIG5hbWVzIGhlcmUuLi5cbmBgYCJ9 -->
-<pre class="r"><code>clean_mete &lt;- meteorite %&gt;% clean_names()
-#I really don&#39;t like &quot;mass(g)&quot;, so I cleaned the names here...</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xlYW5fbWV0ZSA8LSByZWFkX2NzdignbWV0ZW9yaXRlX2NsZWFuZWQuY3N2JylcbmBgYCJ9 -->
+<pre class="r"><code>clean_mete &lt;- read_csv(&#39;meteorite_cleaned.csv&#39;)</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUm93czogNDg3MSBDb2x1bW5zOiA34pSA4pSAIENvbHVtbiBzcGVjaWZpY2F0aW9uIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgFxuRGVsaW1pdGVyOiBcIixcIlxuY2hyICgyKTogbmFtZSwgZmFsbFxuZGJsICg1KTogaWQsIG1hc3NfZywgeWVhciwgbGF0aXR1ZGUsIGxvbmdpdHVkZVxu4oS5IFVzZSBgc3BlYygpYCB0byByZXRyaWV2ZSB0aGUgZnVsbCBjb2x1bW4gc3BlY2lmaWNhdGlvbiBmb3IgdGhpcyBkYXRhLlxu4oS5IFNwZWNpZnkgdGhlIGNvbHVtbiB0eXBlcyBvciBzZXQgYHNob3dfY29sX3R5cGVzID0gRkFMU0VgIHRvIHF1aWV0IHRoaXMgbWVzc2FnZS5cbiJ9 -->
+<pre><code>Rows: 4871 Columns: 7── Column specification ───────────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (2): name, fall
+dbl (5): id, mass_g, year, latitude, longitude
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Find the names and years found for the 10 largest meteorites in the
 data.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xlYW5fbWV0ZSAlPiUgXG4gIHNlbGVjdChjKFwibmFtZVwiLCBcInllYXJcIiwgXCJtYXNzX2dcIikpJT4lXG4gIHNsaWNlX21heChtYXNzX2csIG49IDEwLCB3aXRoX3RpZXMgPSBGQUxTRSApXG4jdGhpcyBsaXN0IHJldHVybnMgdG9wIDEwIHdpdGggeWVhciBhbmQgbWFzcy4gIFxuYGBgIn0= -->
-<pre class="r"><code>clean_mete %&gt;% 
-  select(c(&quot;name&quot;, &quot;year&quot;, &quot;mass_g&quot;))%&gt;%
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuY2xlYW5fbWV0ZSAlPiUgXG4gIHNlbGVjdChjKFxcbmFtZVxcLCBcXHllYXJcXCwgXFxtYXNzX2dcXCkpJT4lXG4gIHNsaWNlX21heChtYXNzX2csIG49IDEwLCB3aXRoX3RpZXMgPSBGQUxTRSApXG4jdGhpcyBsaXN0IHJldHVybnMgdG9wIDEwIHdpdGggeWVhciBhbmQgbWFzcy4gIFxuYGBgXG5gYGAifQ== -->
+<pre class="r"><code>```r
+clean_mete %&gt;% 
+  select(c(\name\, \year\, \mass_g\))%&gt;%
   slice_max(mass_g, n= 10, with_ties = FALSE )
 #this list returns top 10 with year and mass.  </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Find the average mass of meteorites that were recorded falling,
-vs. those which were just found.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzMuNSBXcml0aW5nIGZ1bmN0aW9uL3Byb2dyYW0gdG8gcGVyZm9ybSBzdGF0aXN0aWNhbCBhbmFseXNpc1xuY2xlYW5fbWV0ZSAlPiUgXG4gIGdyb3VwX2J5KGZhbGwpICU+JSBcbiAgc3VtbWFyaXNlKGF2ZXJhZ2UgPSBtZWFuKG1hc3NfZywgbmEucm0gPSBUUlVFKSlcbiNvbiBhdmVyYWdlLCBtZXRlb3JpdGVzIGZlbGwgd2FzIGEgbG90IGJpZ2dlciB0aGFuIHRoZSBvbmVzIGFyZSBmb3VuZC5cbmBgYCJ9 -->
-<pre class="r"><code>#3.5 Writing function/program to perform statistical analysis
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Find the average mass of meteorites that were recorded falling, vs. those which were just found.
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIzMuNSBXcml0aW5nIGZ1bmN0aW9uL3Byb2dyYW0gdG8gcGVyZm9ybSBzdGF0aXN0aWNhbCBhbmFseXNpc1xuY2xlYW5fbWV0ZSAlPiUgXG4gIGdyb3VwX2J5KGZhbGwpICU+JSBcbiAgc3VtbWFyaXNlKGF2ZXJhZ2UgPSBtZWFuKG1hc3NfZywgbmEucm0gPSBUUlVFKSlcbiNvbiBhdmVyYWdlLCBtZXRlb3JpdGVzIGZlbGwgd2FzIGEgbG90IGJpZ2dlciB0aGFuIHRoZSBvbmVzIGFyZSBmb3VuZC5cbmBgYFxuYGBgIn0= --&gt;
+
+```r
+```r
+#3.5 Writing function/program to perform statistical analysis
 clean_mete %&gt;% 
   group_by(fall) %&gt;% 
   summarise(average = mean(mass_g, na.rm = TRUE))
 #on average, meteorites fell was a lot bigger than the ones are found.</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Find the number of meteorites in each year, for every year since
-2000.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2xlYW5fbWV0ZSAlPiUgXG4gIGZpbHRlcih5ZWFyID49IDIwMDApICU+JVxuICBncm91cF9ieSh5ZWFyKSAlPiUgXG4gIHN1bW1hcmlzZShjb3VudCA9IG4oKSlcbiNmcm9tIDIwMDAgdG8gMjAwMyB0aGVyZSB3ZXJlIGNvbnRpbnVvdXMgaW5jcmVhc2luZyBldmVyeSB5ZWFyLlxuI2luIGdlbmVyYWwgdGhlcmUgYXJlbid0IGFueSBjbGVhciB0cmVuZC4gXG5gYGAifQ== -->
-<pre class="r"><code>clean_mete %&gt;% 
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Find the number of meteorites in each year, for every year since 2000.
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuY2xlYW5fbWV0ZSAlPiUgXG4gIGZpbHRlcih5ZWFyID49IDIwMDApICU+JVxuICBncm91cF9ieSh5ZWFyKSAlPiUgXG4gIHN1bW1hcmlzZShjb3VudCA9IG4oKSlcbiNmcm9tIDIwMDAgdG8gMjAwMyB0aGVyZSB3ZXJlIGNvbnRpbnVvdXMgaW5jcmVhc2luZyBldmVyeSB5ZWFyLlxuI2luIGdlbmVyYWwgdGhlcmUgYXJlbid0IGFueSBjbGVhciB0cmVuZC4gXG5gYGBcbmBgYCJ9 --&gt;
+
+```r
+```r
+clean_mete %&gt;% 
   filter(year &gt;= 2000) %&gt;%
   group_by(year) %&gt;% 
   summarise(count = n())
 #from 2000 to 2003 there were continuous increasing every year.
 #in general there aren&#39;t any clear trend. </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Write a function called get_meteorite_count() that takes in two
-arguments: a dataframe and a year, and returns the phrase “In
-(input_year), there were (number of meteorites that year) meteorites.”
-IF there are 1 or more meteorites that year. If there are no meteorites
-in the year, return the phrase “As far as we know, there were no
-meteorites that year”.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZ2V0X21ldGVvcml0ZV9jb3VudDwtIGZ1bmN0aW9uKGQseSl7XG4gIFxuICBudW0gPSBkICU+JSBcbiAgZmlsdGVyKHllYXIgPT0geSkgJT4lXG4gIHN1bW1hcmlzZShjb3VudCA9IG4oKSkgJT4lIFxuICBwdWxsKClcbiAgXG4gIGlmKG51bSA+PSAxKXtcbiAgICByZXR1cm4ocGFzdGUwKFwiSW5cIiwgeSwgXCIsIHRoZXJlIGFyZSBcIiwgbnVtLFwiIG1ldGVvcml0ZXMuXCIpKVxuICB9ZWxzZXtcbiAgICBpZihudW0gPCAxKXtcbiAgICByZXR1cm4oXCJBcyBmYXIgYXMgd2Uga25vdyx0aGVyZSB3ZXJlIG5vIG1ldGVvcml0ZXMgdGhhdCB5ZWFyXCIpXG4gIH1cbiAgfVxufVxuYGBgIn0= -->
-<pre class="r"><code>get_meteorite_count&lt;- function(d,y){
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Write a function called get_meteorite_count() that takes in two arguments: a dataframe and a year, and returns the phrase “In (input_year), there were (number of meteorites that year) meteorites.” IF there are 1 or more meteorites that year. If there are no meteorites in the year, return the phrase “As far as we know, there were no meteorites that year”.
+
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuZ2V0X21ldGVvcml0ZV9jb3VudDwtIGZ1bmN0aW9uKGQseSl7XG4gIFxuICBudW0gPSBkICU+JSBcbiAgZmlsdGVyKHllYXIgPT0geSkgJT4lXG4gIHN1bW1hcmlzZShjb3VudCA9IG4oKSkgJT4lIFxuICBwdWxsKClcbiAgXG4gIGlmKG51bSA+PSAxKXtcbiAgICByZXR1cm4ocGFzdGUwKFxcSW5cXCwgeSwgXFxcbmBgYCJ9 --&gt;
+
+```r
+```r
+get_meteorite_count&lt;- function(d,y){
   
   num = d %&gt;% 
   filter(year == y) %&gt;%
@@ -1842,13 +1886,7 @@ meteorites that year”.</p>
   pull()
   
   if(num &gt;= 1){
-    return(paste0(&quot;In&quot;, y, &quot;, there are &quot;, num,&quot; meteorites.&quot;))
-  }else{
-    if(num &lt; 1){
-    return(&quot;As far as we know,there were no meteorites that year&quot;)
-  }
-  }
-}</code></pre>
+    return(paste0(\In\, y, \</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1858,29 +1896,46 @@ Please keep these ‘test plans’ in the final .Rmd, especially if you are
 completing the PDA.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI015IGZ1bmN0aW9uIGRpZG4ndCB0aGluayBhYm91dCBOQSBmcm9tIHRoZSBkYXRhICBzZXRzLlxuI0l0IHdpbGwgbGV0IG5vbl9udW1lcmljIGlucHV0IG9mIHllYXJzIHBhc3MuXG5cbiNJIGNhbiB0ZXN0IHdpdGggc29tZSBkYXRhZnJhbWUgY29udGFpbnMgTkEsXG4jVGVzdCB5ZWFyIGlucHV0IGFzIHN0cmluZ3MgYW5kIGxvZ2ljYWwuXG5cbmBgYCJ9 -->
-<pre class="r"><code>#My function didn&#39;t think about NA from the data  sets.
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI015IGZ1bmN0aW9uIGRpZG4ndCB0aGluayBhYm91dCBOQSBmcm9tIHRoZSBkYXRhICBzZXRzLlxuI0l0IHdpbGwgbGV0IG5vbl9udW1lcmljIGlucHV0IG9mIHllYXJzIHBhc3MuXG5cbiNJIGNhbiB0ZXN0IHdpdGggc29tZSBkYXRhZnJhbWUgY29udGFpbnMgTkEsXG4jVGVzdCB5ZWFyIGlucHV0IGFzIHN0cmluZ3MgYW5kIGxvZ2ljYWwuXG5cbmBgYFxuYGBgIn0= -->
+<pre class="r"><code>```r
+#My function didn&#39;t think about NA from the data  sets.
 #It will let non_numeric input of years pass.
 
 #I can test with some dataframe contains NA,
 #Test year input as strings and logical.
 </code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>Write a unit test for your function to check whether non-numeric
-inputs (character and logical) for the year argument return an
-error.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzQuMSBUZXN0IHBsYW5zIFxubGlicmFyeSh0ZXN0dGhhdClcbnRlc3RfdGhhdChcIk5vbi1udW1lcmljIGlucHV0IHJldHVybnMgYW4gZXJyb3JcIiwge1xuICBleHBlY3RfZXJyb3IoZ2V0X21ldGVvcml0ZV9jb3VudChjbGVhbl9tZXRlLCBcInllc1wiKSlcbiAgZXhwZWN0X2Vycm9yKGdldF9tZXRlb3JpdGVfY291bnQoY2xlYW5fbWV0ZSwgVFJVRSkpXG59KVxuI015IG9sZCBmdW5jdGlvbiBkaWRuJ3QgcGFzcyB0aGUgdGVzdC5cbmBgYCJ9 -->
-<pre class="r"><code>#4.1 Test plans 
+<pre><code>
+&lt;!-- rnb-source-end --&gt;
+
+&lt;!-- rnb-chunk-end --&gt;
+
+
+&lt;!-- rnb-text-begin --&gt;
+
+
+Write a unit test for your function to check whether non-numeric inputs (character and logical) for the year argument return an error.
+
+&lt;!-- rnb-text-end --&gt;
+
+
+&lt;!-- rnb-chunk-begin --&gt;
+
+
+&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzQuMSBUZXN0IHBsYW5zIFxubGlicmFyeSh0ZXN0dGhhdClcbnRlc3RfdGhhdChcIk5vbi1udW1lcmljIGlucHV0IHJldHVybnMgYW4gZXJyb3JcIiwge1xuICBleHBlY3RfZXJyb3IoZ2V0X21ldGVvcml0ZV9jb3VudChjbGVhbl9tZXRlLCBcInllc1wiKSlcbiAgZXhwZWN0X2Vycm9yKGdldF9tZXRlb3JpdGVfY291bnQoY2xlYW5fbWV0ZSwgVFJVRSkpXG59KVxuYGBgIn0= --&gt;
+
+```r
+#4.1 Test plans 
 library(testthat)
 test_that(&quot;Non-numeric input returns an error&quot;, {
   expect_error(get_meteorite_count(clean_mete, &quot;yes&quot;))
   expect_error(get_meteorite_count(clean_mete, TRUE))
-})
-#My old function didn&#39;t pass the test.</code></pre>
+})</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiVGVzdCBwYXNzZWQg8J+ls1xuIn0= -->
+<pre><code>Test passed 🥳</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI015IG9sZCBmdW5jdGlvbiBkaWRuJ3QgcGFzcyB0aGUgdGVzdC5cbmBgYCJ9 -->
+<pre class="r"><code>#My old function didn&#39;t pass the test.</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -1892,12 +1947,11 @@ character value as the year. Hint: You can use the stop function to
 create your own error message.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzQuNiBQZXJmb3JtaW5nIHRlc3QgYW5kIHJldmlzaW5nIGNvZGVcbnJlZmFjdG9yX2dldF9tZXRlb3JpdGVfY291bnQ8LSBmdW5jdGlvbihkLHkpe1xuICBpZihpcy5udW1lcmljKHkpID09IEZBTFNFKXtcbiAgICBzdG9wKFwiSW5wdXQgeWVhciBpcyBub3QgYSBudW1iZXIuXCIpXG4gIH1cbiAgXG4gIG51bSA9IGQgJT4lIFxuICBmaWx0ZXIoeWVhciA9PSB5KSAlPiVcbiAgc3VtbWFyaXNlKGNvdW50ID0gbigpKSAlPiUgXG4gIHB1bGwoKVxuICBcbiAgaWYobnVtID49IDEpe1xuICAgIHJldHVybihwYXN0ZTAoXCJJblwiLCB5LCBcIiwgdGhlcmUgYXJlIFwiLCBudW0sXCIgbWV0ZW9yaXRlcy5cIikpXG4gIH1lbHNle1xuICAgIGlmKG51bSA8IDEpe1xuICAgIHJldHVybihcIkFzIGZhciBhcyB3ZSBrbm93LHRoZXJlIHdlcmUgbm8gbWV0ZW9yaXRlcyB0aGF0IHllYXJcIilcbiAgfVxuICB9XG59XG5gYGAifQ== -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIzQuNiBQZXJmb3JtaW5nIHRlc3QgYW5kIHJldmlzaW5nIGNvZGVcbmxpYnJhcnkoYXNzZXJ0cilcbnJlZmFjdG9yX2dldF9tZXRlb3JpdGVfY291bnQ8LSBmdW5jdGlvbihkLHkpe1xuICBzdG9waWZub3QoaXMubnVtZXJpYyh5KSlcbiAgXG4gIG51bSA9IGQgJT4lIFxuICBmaWx0ZXIoeWVhciA9PSB5KSAlPiVcbiAgc3VtbWFyaXNlKGNvdW50ID0gbigpKSAlPiUgXG4gIHB1bGwoKVxuICBcbiAgaWYobnVtID49IDEpe1xuICAgIHJldHVybihwYXN0ZTAoXCJJblwiLCB5LCBcIiwgdGhlcmUgYXJlIFwiLCBudW0sXCIgbWV0ZW9yaXRlcy5cIikpXG4gIH1lbHNle1xuICAgIGlmKG51bSA8IDEpe1xuICAgIHJldHVybihcIkFzIGZhciBhcyB3ZSBrbm93LHRoZXJlIHdlcmUgbm8gbWV0ZW9yaXRlcyB0aGF0IHllYXJcIilcbiAgfVxuICB9XG59XG5gYGAifQ== -->
 <pre class="r"><code>#4.6 Performing test and revising code
+library(assertr)
 refactor_get_meteorite_count&lt;- function(d,y){
-  if(is.numeric(y) == FALSE){
-    stop(&quot;Input year is not a number.&quot;)
-  }
+  stopifnot(is.numeric(y))
   
   num = d %&gt;% 
   filter(year == y) %&gt;%
@@ -1923,11 +1977,12 @@ refactor_get_meteorite_count&lt;- function(d,y){
   expect_error(refactor_get_meteorite_count(clean_mete, TRUE))
 })</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiVGVzdCBwYXNzZWQg8J+YuFxuIn0= -->
+<pre><code>Test passed 😸</code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXIpCmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGphbml0b3IpCmBgYAoKUmVhZCB0aGUgY2xlYW5lZCBkYXRhIGludG8gUi4KCmBgYHtyfQpjbGVhbl9tZXRlIDwtIG1ldGVvcml0ZSAlPiUgY2xlYW5fbmFtZXMoKQojSSByZWFsbHkgZG9uJ3QgbGlrZSAibWFzcyhnKSIsIHNvIEkgY2xlYW5lZCB0aGUgbmFtZXMgaGVyZS4uLgpgYGAKCkZpbmQgdGhlIG5hbWVzIGFuZCB5ZWFycyBmb3VuZCBmb3IgdGhlIDEwIGxhcmdlc3QgbWV0ZW9yaXRlcyBpbiB0aGUgZGF0YS4KCmBgYHtyfQpjbGVhbl9tZXRlICU+JSAKICBzZWxlY3QoYygibmFtZSIsICJ5ZWFyIiwgIm1hc3NfZyIpKSU+JQogIHNsaWNlX21heChtYXNzX2csIG49IDEwLCB3aXRoX3RpZXMgPSBGQUxTRSApCiN0aGlzIGxpc3QgcmV0dXJucyB0b3AgMTAgd2l0aCB5ZWFyIGFuZCBtYXNzLiAgCmBgYAoKRmluZCB0aGUgYXZlcmFnZSBtYXNzIG9mIG1ldGVvcml0ZXMgdGhhdCB3ZXJlIHJlY29yZGVkIGZhbGxpbmcsIHZzLiB0aG9zZSB3aGljaCB3ZXJlIGp1c3QgZm91bmQuCmBgYHtyfQojMy41IFdyaXRpbmcgZnVuY3Rpb24vcHJvZ3JhbSB0byBwZXJmb3JtIHN0YXRpc3RpY2FsIGFuYWx5c2lzCmNsZWFuX21ldGUgJT4lIAogIGdyb3VwX2J5KGZhbGwpICU+JSAKICBzdW1tYXJpc2UoYXZlcmFnZSA9IG1lYW4obWFzc19nLCBuYS5ybSA9IFRSVUUpKQojb24gYXZlcmFnZSwgbWV0ZW9yaXRlcyBmZWxsIHdhcyBhIGxvdCBiaWdnZXIgdGhhbiB0aGUgb25lcyBhcmUgZm91bmQuCmBgYAoKRmluZCB0aGUgbnVtYmVyIG9mIG1ldGVvcml0ZXMgaW4gZWFjaCB5ZWFyLCBmb3IgZXZlcnkgeWVhciBzaW5jZSAyMDAwLgpgYGB7cn0KY2xlYW5fbWV0ZSAlPiUgCiAgZmlsdGVyKHllYXIgPj0gMjAwMCkgJT4lCiAgZ3JvdXBfYnkoeWVhcikgJT4lIAogIHN1bW1hcmlzZShjb3VudCA9IG4oKSkKI2Zyb20gMjAwMCB0byAyMDAzIHRoZXJlIHdlcmUgY29udGludW91cyBpbmNyZWFzaW5nIGV2ZXJ5IHllYXIuCiNpbiBnZW5lcmFsIHRoZXJlIGFyZW4ndCBhbnkgY2xlYXIgdHJlbmQuIApgYGAKCldyaXRlIGEgZnVuY3Rpb24gY2FsbGVkIGdldF9tZXRlb3JpdGVfY291bnQoKSB0aGF0IHRha2VzIGluIHR3byBhcmd1bWVudHM6IGEgZGF0YWZyYW1lIGFuZCBhIHllYXIsIGFuZCByZXR1cm5zIHRoZSBwaHJhc2Ug4oCcSW4gKGlucHV0X3llYXIpLCB0aGVyZSB3ZXJlIChudW1iZXIgb2YgbWV0ZW9yaXRlcyB0aGF0IHllYXIpIG1ldGVvcml0ZXMu4oCdIElGIHRoZXJlIGFyZSAxIG9yIG1vcmUgbWV0ZW9yaXRlcyB0aGF0IHllYXIuIElmIHRoZXJlIGFyZSBubyBtZXRlb3JpdGVzIGluIHRoZSB5ZWFyLCByZXR1cm4gdGhlIHBocmFzZSDigJxBcyBmYXIgYXMgd2Uga25vdywgdGhlcmUgd2VyZSBubyBtZXRlb3JpdGVzIHRoYXQgeWVhcuKAnS4KCmBgYHtyfQpnZXRfbWV0ZW9yaXRlX2NvdW50PC0gZnVuY3Rpb24oZCx5KXsKICAKICBudW0gPSBkICU+JSAKICBmaWx0ZXIoeWVhciA9PSB5KSAlPiUKICBzdW1tYXJpc2UoY291bnQgPSBuKCkpICU+JSAKICBwdWxsKCkKICAKICBpZihudW0gPj0gMSl7CiAgICByZXR1cm4ocGFzdGUwKCJJbiIsIHksICIsIHRoZXJlIGFyZSAiLCBudW0sIiBtZXRlb3JpdGVzLiIpKQogIH1lbHNlewogICAgaWYobnVtIDwgMSl7CiAgICByZXR1cm4oIkFzIGZhciBhcyB3ZSBrbm93LHRoZXJlIHdlcmUgbm8gbWV0ZW9yaXRlcyB0aGF0IHllYXIiKQogIH0KICB9Cn0KYGBgCgpXcml0ZSBkb3duIGlkZWFzIGZvciBob3cgdGhlIGZ1bmN0aW9uIHlvdeKAmXZlIHdyaXR0ZW4gY291bGQgYmUgaW1wcm92ZWQgYW5kIGhvdyB5b3UgY291bGQgdGVzdCB0aGF0IHRoZSBmdW5jdGlvbiB3b3JrcyBhcyBpdCBzaG91bGQuIFBsZWFzZSBrZWVwIHRoZXNlIOKAmHRlc3QgcGxhbnPigJkgaW4gdGhlIGZpbmFsIC5SbWQsIGVzcGVjaWFsbHkgaWYgeW91IGFyZSBjb21wbGV0aW5nIHRoZSBQREEuCmBgYHtyfQojTXkgZnVuY3Rpb24gZGlkbid0IHRoaW5rIGFib3V0IE5BIGZyb20gdGhlIGRhdGEgIHNldHMuCiNJdCB3aWxsIGxldCBub25fbnVtZXJpYyBpbnB1dCBvZiB5ZWFycyBwYXNzLgoKI0kgY2FuIHRlc3Qgd2l0aCBzb21lIGRhdGFmcmFtZSBjb250YWlucyBOQSwKI1Rlc3QgeWVhciBpbnB1dCBhcyBzdHJpbmdzIGFuZCBsb2dpY2FsLgoKYGBgCgpXcml0ZSBhIHVuaXQgdGVzdCBmb3IgeW91ciBmdW5jdGlvbiB0byBjaGVjayB3aGV0aGVyIG5vbi1udW1lcmljIGlucHV0cyAoY2hhcmFjdGVyIGFuZCBsb2dpY2FsKSBmb3IgdGhlIHllYXIgYXJndW1lbnQgcmV0dXJuIGFuIGVycm9yLgpgYGB7cn0KIzQuMSBUZXN0IHBsYW5zIApsaWJyYXJ5KHRlc3R0aGF0KQp0ZXN0X3RoYXQoIk5vbi1udW1lcmljIGlucHV0IHJldHVybnMgYW4gZXJyb3IiLCB7CiAgZXhwZWN0X2Vycm9yKGdldF9tZXRlb3JpdGVfY291bnQoY2xlYW5fbWV0ZSwgInllcyIpKQogIGV4cGVjdF9lcnJvcihnZXRfbWV0ZW9yaXRlX2NvdW50KGNsZWFuX21ldGUsIFRSVUUpKQp9KQojTXkgb2xkIGZ1bmN0aW9uIGRpZG4ndCBwYXNzIHRoZSB0ZXN0LgpgYGAKCkltcHJvdmUgeW91ciBmdW5jdGlvbiBiYXNlZCBvbiB0aGUgcmVzdWx0IG9mIHlvdXIgdGVzdC4gSW5zdGVhZCBvZiBnb2luZyBiYWNrIGFuZCBjaGFuZ2luZyB0aGUgZnVuY3Rpb24sIHBsZWFzZSBjcmVhdGUgYSBuZXcgZnVuY3Rpb24gdGhhdCBpcyB0aGUgaW1wcm92ZWQgdmVyc2lvbiBjYWxsZWQgcmVmYWN0b3JfZ2V0X21ldGVvcml0ZV9jb3VudCgpLiBUZXN0IHlvdXIgZnVuY3Rpb24gdG8gbWFrZSBzdXJlIGl0IG5vdyBnaXZlcyBhbiBlcnJvciB3aGVuIHlvdSBpbnB1dCBhIGxvZ2ljYWwgb3IgY2hhcmFjdGVyIHZhbHVlIGFzIHRoZSB5ZWFyLiBIaW50OiBZb3UgY2FuIHVzZSB0aGUgc3RvcCBmdW5jdGlvbiB0byBjcmVhdGUgeW91ciBvd24gZXJyb3IgbWVzc2FnZS4KYGBge3J9CiM0LjYgUGVyZm9ybWluZyB0ZXN0IGFuZCByZXZpc2luZyBjb2RlCnJlZmFjdG9yX2dldF9tZXRlb3JpdGVfY291bnQ8LSBmdW5jdGlvbihkLHkpewogIGlmKGlzLm51bWVyaWMoeSkgPT0gRkFMU0UpewogICAgc3RvcCgiSW5wdXQgeWVhciBpcyBub3QgYSBudW1iZXIuIikKICB9CiAgCiAgbnVtID0gZCAlPiUgCiAgZmlsdGVyKHllYXIgPT0geSkgJT4lCiAgc3VtbWFyaXNlKGNvdW50ID0gbigpKSAlPiUgCiAgcHVsbCgpCiAgCiAgaWYobnVtID49IDEpewogICAgcmV0dXJuKHBhc3RlMCgiSW4iLCB5LCAiLCB0aGVyZSBhcmUgIiwgbnVtLCIgbWV0ZW9yaXRlcy4iKSkKICB9ZWxzZXsKICAgIGlmKG51bSA8IDEpewogICAgcmV0dXJuKCJBcyBmYXIgYXMgd2Uga25vdyx0aGVyZSB3ZXJlIG5vIG1ldGVvcml0ZXMgdGhhdCB5ZWFyIikKICB9CiAgfQp9CmBgYAoKYGBge3J9CnRlc3RfdGhhdCgiTm9uLW51bWVyaWMgaW5wdXQgcmV0dXJucyBhbiBlcnJvciIsIHsKICBleHBlY3RfZXJyb3IocmVmYWN0b3JfZ2V0X21ldGVvcml0ZV9jb3VudChjbGVhbl9tZXRlLCAieWVzIikpCiAgZXhwZWN0X2Vycm9yKHJlZmFjdG9yX2dldF9tZXRlb3JpdGVfY291bnQoY2xlYW5fbWV0ZSwgVFJVRSkpCn0pCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUiBOb3RlYm9vayIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQoKYGBge3J9CmxpYnJhcnkodGlkeXIpCmxpYnJhcnkodGlkeXZlcnNlKQpsaWJyYXJ5KGphbml0b3IpCmBgYAoKUmVhZCB0aGUgY2xlYW5lZCBkYXRhIGludG8gUi4KCmBgYHtyfQpjbGVhbl9tZXRlIDwtIHJlYWRfY3N2KCdtZXRlb3JpdGVfY2xlYW5lZC5jc3YnKQpgYGAKCkZpbmQgdGhlIG5hbWVzIGFuZCB5ZWFycyBmb3VuZCBmb3IgdGhlIDEwIGxhcmdlc3QgbWV0ZW9yaXRlcyBpbiB0aGUgZGF0YS4KCmBgYHtyfQpjbGVhbl9tZXRlICU+JSAKICBzZWxlY3QoYygibmFtZSIsICJ5ZWFyIiwgIm1hc3NfZyIpKSU+JQogIHNsaWNlX21heChtYXNzX2csIG49IDEwLCB3aXRoX3RpZXMgPSBGQUxTRSApCiN0aGlzIGxpc3QgcmV0dXJucyB0b3AgMTAgd2l0aCB5ZWFyIGFuZCBtYXNzLiAgCmBgYAoKRmluZCB0aGUgYXZlcmFnZSBtYXNzIG9mIG1ldGVvcml0ZXMgdGhhdCB3ZXJlIHJlY29yZGVkIGZhbGxpbmcsIHZzLiB0aG9zZSB3aGljaCB3ZXJlIGp1c3QgZm91bmQuCmBgYHtyfQojMy41IFdyaXRpbmcgZnVuY3Rpb24vcHJvZ3JhbSB0byBwZXJmb3JtIHN0YXRpc3RpY2FsIGFuYWx5c2lzCmNsZWFuX21ldGUgJT4lIAogIGdyb3VwX2J5KGZhbGwpICU+JSAKICBzdW1tYXJpc2UoYXZlcmFnZSA9IG1lYW4obWFzc19nLCBuYS5ybSA9IFRSVUUpKQojb24gYXZlcmFnZSwgbWV0ZW9yaXRlcyBmZWxsIHdhcyBhIGxvdCBiaWdnZXIgdGhhbiB0aGUgb25lcyBhcmUgZm91bmQuCmBgYAoKRmluZCB0aGUgbnVtYmVyIG9mIG1ldGVvcml0ZXMgaW4gZWFjaCB5ZWFyLCBmb3IgZXZlcnkgeWVhciBzaW5jZSAyMDAwLgpgYGB7cn0KY2xlYW5fbWV0ZSAlPiUgCiAgZmlsdGVyKHllYXIgPj0gMjAwMCkgJT4lCiAgZ3JvdXBfYnkoeWVhcikgJT4lIAogIHN1bW1hcmlzZShjb3VudCA9IG4oKSkKI2Zyb20gMjAwMCB0byAyMDAzIHRoZXJlIHdlcmUgY29udGludW91cyBpbmNyZWFzaW5nIGV2ZXJ5IHllYXIuCiNpbiBnZW5lcmFsIHRoZXJlIGFyZW4ndCBhbnkgY2xlYXIgdHJlbmQuIApgYGAKCldyaXRlIGEgZnVuY3Rpb24gY2FsbGVkIGdldF9tZXRlb3JpdGVfY291bnQoKSB0aGF0IHRha2VzIGluIHR3byBhcmd1bWVudHM6IGEgZGF0YWZyYW1lIGFuZCBhIHllYXIsIGFuZCByZXR1cm5zIHRoZSBwaHJhc2Ug4oCcSW4gKGlucHV0X3llYXIpLCB0aGVyZSB3ZXJlIChudW1iZXIgb2YgbWV0ZW9yaXRlcyB0aGF0IHllYXIpIG1ldGVvcml0ZXMu4oCdIElGIHRoZXJlIGFyZSAxIG9yIG1vcmUgbWV0ZW9yaXRlcyB0aGF0IHllYXIuIElmIHRoZXJlIGFyZSBubyBtZXRlb3JpdGVzIGluIHRoZSB5ZWFyLCByZXR1cm4gdGhlIHBocmFzZSDigJxBcyBmYXIgYXMgd2Uga25vdywgdGhlcmUgd2VyZSBubyBtZXRlb3JpdGVzIHRoYXQgeWVhcuKAnS4KCmBgYHtyfQpnZXRfbWV0ZW9yaXRlX2NvdW50PC0gZnVuY3Rpb24oZCx5KXsKICAKICBudW0gPSBkICU+JSAKICBmaWx0ZXIoeWVhciA9PSB5KSAlPiUKICBzdW1tYXJpc2UoY291bnQgPSBuKCkpICU+JSAKICBwdWxsKCkKICAKICBpZihudW0gPj0gMSl7CiAgICByZXR1cm4ocGFzdGUwKCJJbiIsIHksICIsIHRoZXJlIGFyZSAiLCBudW0sIiBtZXRlb3JpdGVzLiIpKQogIH1lbHNlewogICAgaWYobnVtIDwgMSl7CiAgICByZXR1cm4oIkFzIGZhciBhcyB3ZSBrbm93LHRoZXJlIHdlcmUgbm8gbWV0ZW9yaXRlcyB0aGF0IHllYXIiKQogIH0KICB9Cn0KYGBgCgpXcml0ZSBkb3duIGlkZWFzIGZvciBob3cgdGhlIGZ1bmN0aW9uIHlvdeKAmXZlIHdyaXR0ZW4gY291bGQgYmUgaW1wcm92ZWQgYW5kIGhvdyB5b3UgY291bGQgdGVzdCB0aGF0IHRoZSBmdW5jdGlvbiB3b3JrcyBhcyBpdCBzaG91bGQuIFBsZWFzZSBrZWVwIHRoZXNlIOKAmHRlc3QgcGxhbnPigJkgaW4gdGhlIGZpbmFsIC5SbWQsIGVzcGVjaWFsbHkgaWYgeW91IGFyZSBjb21wbGV0aW5nIHRoZSBQREEuCmBgYHtyfQojTXkgZnVuY3Rpb24gZGlkbid0IHRoaW5rIGFib3V0IE5BIGZyb20gdGhlIGRhdGEgc2V0cy4KI0l0IHdpbGwgbGV0IG5vbl9udW1lcmljIGlucHV0IG9mIHllYXJzIHBhc3MuCgojSSBjYW4gdGVzdCB3aXRoIHNvbWUgZGF0YSBmcmFtZSBjb250YWlucyBOQSwKI1Rlc3QgeWVhciBpbnB1dCBhcyBzdHJpbmdzIGFuZCBsb2dpY2FsLgoKYGBgCgpXcml0ZSBhIHVuaXQgdGVzdCBmb3IgeW91ciBmdW5jdGlvbiB0byBjaGVjayB3aGV0aGVyIG5vbi1udW1lcmljIGlucHV0cyAoY2hhcmFjdGVyIGFuZCBsb2dpY2FsKSBmb3IgdGhlIHllYXIgYXJndW1lbnQgcmV0dXJuIGFuIGVycm9yLgpgYGB7cn0KIzQuMSBUZXN0IHBsYW5zIApsaWJyYXJ5KHRlc3R0aGF0KQp0ZXN0X3RoYXQoIk5vbi1udW1lcmljIGlucHV0IHJldHVybnMgYW4gZXJyb3IiLCB7CiAgZXhwZWN0X2Vycm9yKGdldF9tZXRlb3JpdGVfY291bnQoY2xlYW5fbWV0ZSwgInllcyIpKQogIGV4cGVjdF9lcnJvcihnZXRfbWV0ZW9yaXRlX2NvdW50KGNsZWFuX21ldGUsIFRSVUUpKQp9KQojTXkgb2xkIGZ1bmN0aW9uIGRpZG4ndCBwYXNzIHRoZSB0ZXN0LgpgYGAKCkltcHJvdmUgeW91ciBmdW5jdGlvbiBiYXNlZCBvbiB0aGUgcmVzdWx0IG9mIHlvdXIgdGVzdC4gSW5zdGVhZCBvZiBnb2luZyBiYWNrIGFuZCBjaGFuZ2luZyB0aGUgZnVuY3Rpb24sIHBsZWFzZSBjcmVhdGUgYSBuZXcgZnVuY3Rpb24gdGhhdCBpcyB0aGUgaW1wcm92ZWQgdmVyc2lvbiBjYWxsZWQgcmVmYWN0b3JfZ2V0X21ldGVvcml0ZV9jb3VudCgpLiBUZXN0IHlvdXIgZnVuY3Rpb24gdG8gbWFrZSBzdXJlIGl0IG5vdyBnaXZlcyBhbiBlcnJvciB3aGVuIHlvdSBpbnB1dCBhIGxvZ2ljYWwgb3IgY2hhcmFjdGVyIHZhbHVlIGFzIHRoZSB5ZWFyLiBIaW50OiBZb3UgY2FuIHVzZSB0aGUgc3RvcCBmdW5jdGlvbiB0byBjcmVhdGUgeW91ciBvd24gZXJyb3IgbWVzc2FnZS4KYGBge3J9CiM0LjYgUGVyZm9ybWluZyB0ZXN0IGFuZCByZXZpc2luZyBjb2RlCmxpYnJhcnkoYXNzZXJ0cikKcmVmYWN0b3JfZ2V0X21ldGVvcml0ZV9jb3VudDwtIGZ1bmN0aW9uKGQseSl7CiAgc3RvcGlmbm90KGlzLm51bWVyaWMoeSkpCiAgCiAgbnVtID0gZCAlPiUgCiAgZmlsdGVyKHllYXIgPT0geSkgJT4lCiAgc3VtbWFyaXNlKGNvdW50ID0gbigpKSAlPiUgCiAgcHVsbCgpCiAgCiAgaWYobnVtID49IDEpewogICAgcmV0dXJuKHBhc3RlMCgiSW4iLCB5LCAiLCB0aGVyZSBhcmUgIiwgbnVtLCIgbWV0ZW9yaXRlcy4iKSkKICB9ZWxzZXsKICAgIGlmKG51bSA8IDEpewogICAgcmV0dXJuKCJBcyBmYXIgYXMgd2Uga25vdyx0aGVyZSB3ZXJlIG5vIG1ldGVvcml0ZXMgdGhhdCB5ZWFyIikKICB9CiAgfQp9CmBgYAoKYGBge3J9CnRlc3RfdGhhdCgiTm9uLW51bWVyaWMgaW5wdXQgcmV0dXJucyBhbiBlcnJvciIsIHsKICBleHBlY3RfZXJyb3IocmVmYWN0b3JfZ2V0X21ldGVvcml0ZV9jb3VudChjbGVhbl9tZXRlLCAieWVzIikpCiAgZXhwZWN0X2Vycm9yKHJlZmFjdG9yX2dldF9tZXRlb3JpdGVfY291bnQoY2xlYW5fbWV0ZSwgVFJVRSkpCn0pCmBgYAo=</div>
 
 
 

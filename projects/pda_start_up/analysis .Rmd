@@ -12,8 +12,7 @@ library(janitor)
 Read the cleaned data into R.
 
 ```{r}
-clean_mete <- meteorite %>% clean_names()
-#I really don't like "mass(g)", so I cleaned the names here...
+clean_mete <- read_csv('meteorite_cleaned.csv')
 ```
 
 Find the names and years found for the 10 largest meteorites in the data.
@@ -66,10 +65,10 @@ get_meteorite_count<- function(d,y){
 
 Write down ideas for how the function you’ve written could be improved and how you could test that the function works as it should. Please keep these ‘test plans’ in the final .Rmd, especially if you are completing the PDA.
 ```{r}
-#My function didn't think about NA from the data  sets.
+#My function didn't think about NA from the data sets.
 #It will let non_numeric input of years pass.
 
-#I can test with some dataframe contains NA,
+#I can test with some data frame contains NA,
 #Test year input as strings and logical.
 
 ```
