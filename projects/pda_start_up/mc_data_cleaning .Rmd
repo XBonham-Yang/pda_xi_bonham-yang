@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+3.2 Writing function/program to process data from a database
+3.2 Data structures including tables and databases
+```{r}
+library(RPostgres)
+source("mc_login.R")
+db_connection = dbConnect(
+  drv = Postgres(), 
+  host = mc_host,
+  port = mc_port,
+  dbname = mc_database,
+  user = mc_username,
+  password = mc_password,
+  bigint = "numeric"
+)
+rm(mc_username, mc_password)
+```
+
+
+```{r}
+dbListTables(conn = db_connection)
+```
+3.2 Writing function/program to process data from a database
+3.2 Data structures including tables and databases
+```{r}
+mc_data <- dbGetQuery(conn = db_connection, 
+                   statement = "SELECT * FROM meteorite_class")
+
+
+library(tidyverse)
+write_csv(mc_data, "Clean data /mc_data")
+```
+
