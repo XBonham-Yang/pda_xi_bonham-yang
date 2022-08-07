@@ -28,8 +28,7 @@ dbListTables(conn = db_connection)
 ```{r}
 mc_data <- dbGetQuery(conn = db_connection, 
                    statement = "SELECT * FROM meteorite_class")
-
-
+mc_data
 library(tidyverse)
 write_csv(mc_data, "Clean data /mc_data")
 ```

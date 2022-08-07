@@ -12,7 +12,7 @@ library(janitor)
 Read the cleaned data into R.
 
 ```{r}
-clean_mete <- read_csv('meteorite_cleaned.csv')
+clean_mete <- read_csv("Clean data /meteorite_cleaned.csv")
 ```
 
 Find the names and years found for the 10 largest meteorites in the data.
