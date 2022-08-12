@@ -112,3 +112,21 @@ test_that("Non-numeric input returns an error", {
   expect_error(refactor_get_meteorite_count(clean_mete, TRUE))
 })
 ```
+
+
+3.6 Writing function/program to create visualisations
+
+```{r}
+clean_mete %>% 
+  group_by(fall) %>% 
+  summarise(average = mean(mass_g, na.rm = TRUE)) %>% 
+  ggplot()+
+  aes(x = fall, y = average/1000)+
+  geom_col(aes(fill = fall))+
+  labs(x = "\nFall or Found",
+       y = "Mass(kg)",
+       fill = "",
+       title = "Weight Compareing of Fall vs Found\n")
+```
+#this plot links back to one of the analysis question,
+#It shows that on average, meteorites fell was a lot bigger than the ones are found.
