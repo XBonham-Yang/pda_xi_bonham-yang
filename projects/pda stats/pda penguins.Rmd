@@ -1,0 +1,108 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+1. Exploratory analysis
+Explore the dataset using visualisations, and keep in mind the question you’re trying to answer above.
+
+Write a short summary of the results.
+```{r}
+library(palmerpenguins)
+library(tidyverse)
+library(e1071)
+library(infer)
+penguins <- palmerpenguins::penguins 
+```
+
+```{r}
+summary(penguins)
+penguins %>% 
+  ggplot(aes(species,bill_length_mm))+
+  geom_boxplot(aes(colour = species))+
+  geom_jitter(aes(colour = species), alpha = 0.5)
+```
+```
+from the graph above, chinstrap has the longest bill and 
+adelie has the shortest. gentoo and chinstrap looks very similar. with in each 
+species, the distribution seems normal.
+```
+
+2. Summary statistics
+Calculate the following summary statistics to describe bill length for each species:
+
+measures of centrality (mean & median)
+spread (standard deviation)
+skewness (you can use the skewness() function from the e1071 package)
+Write a short summary of the results.
+
+4.4 Summary statistics including measures of centrality, spread and skewness
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(mean_bill = mean(bill_length_mm, na.rm = TRUE),
+            median = median(bill_length_mm, na.rm = TRUE),
+            skewness = skewness(bill_length_mm, na.rm = TRUE, type = 1)
+            )
+```
+```
+from the table above, the average bill_lenght matachs with the box_plot(Chinstrap has the longest then gentoo and adelie),
+adelie and gentoo, chinstrp and adelie are symmtric,
+and gentoo are moderately right skewed 
+```
+
+
+3. Hypothesis test & probability
+Perform a suitable hypothesis test to check whether the mean bill length of Gentoo is significantly longer than the mean bill length of Adelie.
+
+Visualise the p-value on the null distribution.
+Write an interpretation of your findings.
+
+
+4.1 Exploratory data analysis and targeted data analysis (hypothesis testing)
+4.3 Probability and probability distributions
+
+My Null(H0) and alternative(H1) hypothesis as below, my alpha level is 0.05
+$$
+N0: \mu_{gentoo\ bill\ length} = \mu_{adelie\ bill\ length} \\
+N1: \mu_{gentoo\ bill\ length} > \mu_{adelie\ bill\ length}
+$$
+
+
+```{r}
+null_distribution <- penguins %>% 
+  filter(species %in% c("Adelie", "Gentoo")) %>% 
+  specify(bill_length_mm ~ species) %>% 
+  hypothesise(null = 'independence') %>% 
+  generate(rep = 1000, type = 'permute') %>% 
+  calculate(stat = "diff in means", order = c('Gentoo', 'Adelie'))
+
+null_distribution
+```
+
+
+
+```{r}
+observed_stats <- penguins %>% 
+  filter(species %in% c("Adelie", "Gentoo")) %>% 
+  specify(bill_length_mm ~ species) %>% 
+  calculate(stat = "diff in means", order = c('Gentoo', 'Adelie'))
+
+observed_stats 
+```
+```{r}
+null_distribution %>% 
+  visualise()+
+  shade_p_value(obs_stat = observed_stats, direction = "right")
+```
+```{r}
+p_value <- null_distribution %>% 
+  get_p_value(obs_stat = observed_stats, direction = "right")
+p_value
+```
+```
+p_value is how likely it is to see a result as extreme as observed result, if the null hypothesus is true.
+we got p_value < 0.0001, this means it's not very likely to see a dataset such as ours, if the HO is true. 
+It is a lot less than our alpha level, 
+the difference is significant and we reject H0 and 
+found evidence to support H1. 
+```
