@@ -128,5 +128,5 @@ clean_mete %>%
        fill = "",
        title = "Weight Compareing of Fall vs Found\n")
 ```
-#this plot links back to one of the analysis question,
-#It shows that on average, meteorites fell was a lot bigger than the ones are found.
+#this plot links back to one of the analysis question,(Find the average mass of meteorites that were recorded falling, vs. those which were just found.)
+#It shows that on average, meteorites fell was a lot smaller than the ones are found.
