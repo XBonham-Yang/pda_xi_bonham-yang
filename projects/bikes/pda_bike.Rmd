@@ -1,0 +1,351 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library(tsibbledata)
+library(tidyverse)
+library(lubridate)
+library(tsibble)
+nyc_bikes_df <- nyc_bikes
+```
+
+What is the pattern of bike hires over time (e.g. within a year, month, week, or day)?
+Do bike hire patterns differ between bike rider demographics? (e.g. gender, type of trip, age)
+Any other insights?
+
+You will probably want to use the data in column start_time to create date, month and year columns.
+Summarising the data by aggregating hire counts by different measures of time (e.g. year, quarter, month, day) and then visualising the results is probably a good idea
+When grouping time series data (tsibble), you need to use index_by instead of group_by
+```{r}
+nyc_bikes_short <- nyc_bikes_df %>% 
+  select(start_time, stop_time, birth_year, gender, type) %>% 
+  mutate(year = year(start_time),
+         month = month(start_time, label = TRUE),
+         day = as.Date(start_time),
+         wday  = wday(start_time,label = TRUE),
+         week = week(start_time),
+         time_ride = stop_time - start_time,
+         age = as.numeric(year - birth_year))
+nyc_bikes_short
+```
+
+year/month/week/day pattern
+
+```{r}
+bike_year <-nyc_bikes_short%>%
+  index_by(year) %>%
+  summarise(p90 = quantile(time_ride, probs=0.9, na.rm=TRUE))
+bike_year
+
+ nyc_bikes_short %>% 
+  mutate(time_ride = as.numeric(time_ride)) %>% 
+  filter(time_ride < 17.94614) %>% 
+ggplot() + 
+  aes(as.factor(year), as.numeric(time_ride))+
+  geom_boxplot() + 
+  labs(x = "\nYear",
+     y = "time_ride",
+     title = "Distribution of ride time in 2018(90%)",
+     subtitle = "Data from citibike NYC\n")
+
+
+nyc_bikes_short %>% 
+  ggplot()+
+  aes(as.factor(year), as.numeric(time_ride)) %>% 
+  geom_boxplot()+
+  labs(x = "\nYear",
+     y = "time_ride",
+     title = "Distribution of ride time in 2018(100%)",
+     subtitle = "Data from citiBike NYC\n")
+ #the outliers are too crazy so I only included the 90% of the data to give 
+#a brief idea of how the ride time is like in the year of 2018. 
+```
+```{r}
+bike_month <- nyc_bikes_short%>% 
+  index_by(month) %>% 
+  summarise(ride_time_mean = mean(time_ride, na.rm = TRUE))
+
+bike_month
+
+bike_month %>% 
+  ggplot(aes(month, as.numeric(ride_time_mean)))+
+  geom_point()+
+  geom_line(group = 1)+
+  labs(
+    x="Month",
+    y = "Average Riding Time",
+    title = "Average riding time for each month",
+    subtitle = "Data from 2018 citibike NYC\n"
+  )
+
+```
+
+```{r}
+bike_wday <- nyc_bikes_short%>% 
+  index_by(wday) %>% 
+  summarise(ride_time_mean = mean(time_ride, na.rm = TRUE))
+
+bike_wday
+
+ bike_wday %>% 
+  ggplot(aes(wday, ride_time_mean))+
+  geom_point()+
+  geom_line(group = 1)+
+   labs(
+    x="Weekdays",
+    y = "Average Riding Time",
+    title = "Average riding time for each day of week",
+    subtitle = "Data from 2018 citibike NYC\n"
+  )
+```
+```{r}
+bike_day <- nyc_bikes_short%>% 
+  index_by(day) %>% 
+  summarise(ride_time_mean = mean(time_ride, na.rm = TRUE))
+
+bike_day
+
+bike_day %>% 
+  ggplot(aes(day, as.numeric(ride_time_mean)))+
+  geom_line()+
+  coord_trans(y = "log10")+
+  labs(
+    x="Days",
+    y = "Average Riding Time(log_scale)",
+    title = "Average riding time for each day",
+    subtitle = "Data from 2018 citibike NYC\n"
+  )
+```
+week 
+```{r}
+bike_week <- nyc_bikes_short%>% 
+  index_by(week) %>% 
+  summarise(ride_time_mean = mean(time_ride, na.rm = TRUE))
+
+bike_week
+
+bike_week %>% 
+  ggplot(aes(week, as.numeric(ride_time_mean)))+
+  geom_point()+
+  geom_line(group = 1)+
+   scale_x_continuous(breaks = seq(0,52,5))+
+  coord_trans(y = "log10")+
+  labs(
+    x="Weeks in the year",
+    y = "Average Riding Time(log scale)",
+    title = "Average riding time for each week",
+    subtitle = "Data from 2018 citibike NYC\n"
+  )
+#42 and 46 something to check 
+#OCT 15 -21
+#nov 12 -18
+```
+
+
+##gender-year
+```{r}
+ nyc_bikes_short %>% 
+  mutate(time_ride = as.numeric(time_ride)) %>% 
+  filter(time_ride < 17.94614) %>% 
+ggplot() + 
+  aes(as.factor(year), as.numeric(time_ride))+
+  geom_boxplot(aes(col = gender)) + 
+  labs(x = "\nYear",
+     y = "time_ride",
+     title = "Distribution of ride time in 2018(90%)",
+     subtitle = "for each gender\n")
+
+```
+gender month
+```{r}
+nyc_bikes_short %>% 
+  group_by(gender) %>% 
+  index_by(month) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(month, as.numeric(mean_time_ride)))+
+  facet_grid(~gender)+
+  geom_point(aes(col = gender))+
+  geom_line(group = 1)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  labs(
+    x="Month",
+    y = "Average Riding Time",
+    title = "Average riding time for each month",
+    subtitle = "for each gender NYC\n"
+  )
+```
+gender week
+```{r}
+nyc_bikes_short %>% 
+  group_by(gender) %>% 
+  index_by(week) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(week, as.numeric(mean_time_ride)))+
+  facet_wrap(~gender,ncol =1, scales = "free_y")+
+  geom_point(aes(col = gender))+
+  geom_line(group = 1)+
+ scale_x_continuous(breaks = seq(0,52,5))+
+  labs(
+    x="Week",
+    y = "Average Riding Time",
+    title = "Average riding time for each month",
+    subtitle = "for each gender NYC\n"
+  )
+```
+gender weekdays
+```{r}
+nyc_bikes_short %>% 
+  group_by(gender) %>% 
+  index_by(wday) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(wday, as.numeric(mean_time_ride)))+
+  facet_wrap(~gender,ncol =1, scales = "free_y")+
+  geom_point(aes(col = gender))+
+  geom_line(aes(col = gender),group = 1)+
+  labs(
+    x="Weekday",
+    y = "Average Riding Time",
+    title = "Average riding time for each weekdays",
+    subtitle = "for each gender NYC\n"
+  )
+```
+
+```{r}
+nyc_bikes_short <- nyc_bikes_short %>%  mutate(
+  age_group = case_when(age < 18 ~ "Under 18",
+                        age < 30 ~"18 to 30",
+                        age < 60 ~"30 to 60",
+                        TRUE ~"60 and above")
+)
+```
+age_year
+```{r}
+ nyc_bikes_short %>% 
+  mutate(time_ride = as.numeric(time_ride)) %>% 
+  filter(time_ride < 17.94614) %>% 
+ggplot() + 
+  aes(as.factor(year), as.numeric(time_ride))+
+  geom_boxplot(aes(col = age_group)) + 
+  labs(x = "\nYear",
+     y = "time_ride",
+     title = "Distribution of ride time in 2018(90%)",
+     subtitle = "for each age group\n")
+```
+age month
+```{r}
+nyc_bikes_short %>% 
+  group_by(age_group) %>% 
+  index_by(month) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(month, as.numeric(mean_time_ride)))+
+  facet_wrap(~age_group, ncol = 1, scales = "free_y")+
+  geom_point(aes(col = age_group))+
+  geom_line(group = 1)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  labs(
+    x="Month",
+    y = "Average Riding Time",
+    title = "Average riding time for each month",
+    subtitle = "for each age_group NYC\n"
+  )
+```
+age weekday
+```{r}
+nyc_bikes_short %>% 
+  group_by(age_group) %>% 
+  index_by(wday) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(wday, as.numeric(mean_time_ride)))+
+  facet_wrap(~age_group,ncol =1, scales = "free_y")+
+  geom_point(aes(col = age_group))+
+  geom_line(aes(col = age_group),group = 1)+
+  labs(
+    x="Weekday",
+    y = "Average Riding Time",
+    title = "Average riding time for each weekdays",
+    subtitle = "for each age group NYC\n"
+  )
+```
+```{r}
+nyc_bikes_short %>% 
+  group_by(age_group) %>% 
+  index_by(week) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(week, as.numeric(mean_time_ride)))+
+  facet_wrap(~age_group,ncol =1, scales = "free_y")+
+  geom_point(aes(col = age_group))+
+  geom_line(group = 1)+
+ scale_x_continuous(breaks = seq(0,52,5))+
+  labs(
+    x="Week",
+    y = "Average Riding Time",
+    title = "Average riding time for each month",
+    subtitle = "for each age group NYC\n"
+  )
+```
+```{r}
+library(leaflet)
+```
+
+```{r}
+nyc_bikes_df %>% 
+  filter(bike_id == "26301") %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+
+```{r}
+nyc_bikes_df %>% 
+  filter(bike_id == "29477") %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+
+```{r}
+ nyc_bikes_df %>% 
+  mutate(week = week(start_time)) %>% 
+  filter(week == 46) %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+```{r}
+ nyc_bikes_df %>% 
+  mutate(week = week(start_time)) %>% 
+  filter(week == 46) %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~end_long,
+    lat = ~end_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+near to stations 
+
+
+```{r}
+nyc_bikes_short %>% 
+  group_by(day) %>% 
+  summarise(mean = mean(time_ride)) %>% 
+  arrange(desc(mean))
+```
+‘Bike MS’ in New Jersey Raises $4.4M to Support Patient Care, Advance Research
+19 oct 
+
+

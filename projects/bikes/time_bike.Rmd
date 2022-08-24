@@ -1,0 +1,51 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+What is the geographical spread of the start points of bike hires?
+
+For the spatial plot, you probably want to use leaflet as it makes it easy to plot longitudes 
+
+and latitudes. Make sure to filter the data first (take a sample) as otherwise R may crash because of the sheer volume of points.
+```{r}
+library(leaflet)
+library(tsibbledata)
+library(tidyverse)
+library(tsibble)
+nyc_bikes_df <- nyc_bikes
+```
+
+```{r}
+nyc_bikes_df %>% 
+  filter(bike_id == "26301") %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+```{r}
+nyc_bikes_df %>% 
+  filter(bike_id == "29477") %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+```{r}
+nyc_bikes_df %>% 
+  filter(start_time < ymd(20181015) & start_time > ymd(20181021)) %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+
