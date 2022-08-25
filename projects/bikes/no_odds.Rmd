@@ -1,0 +1,71 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r}
+nyc_bikes_short %>% 
+  group_by(age_group) %>% 
+  count()
+```
+
+```{r}
+no_odds<-nyc_bikes_short %>% 
+  filter(!(as.character(day) %in% c("2018-10-19","2018-11-16")))
+```
+
+```{r}
+no_odds %>% 
+  group_by(age_group) %>% 
+  index_by(wday) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(wday, as.numeric(mean_time_ride)))+
+  facet_wrap(~age_group,ncol =1, scales = "free_y")+
+  geom_point(aes(col = age_group), size = 2)+
+  geom_line(aes(col = age_group),group = 1)+
+  labs(
+    x="Weekday",
+    y = "Average Riding Time",
+    col = "Age Group",
+    title = "Average riding time for each weekdays",
+    subtitle = "for each age group(no odds) \n"
+  )
+```
+
+```{r}
+no_odds%>% 
+  group_by(age_group) %>% 
+  index_by(month) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(month, as.numeric(mean_time_ride)))+
+  facet_wrap(~age_group, ncol = 1, scales = "free_y")+
+  geom_point(aes(col = age_group))+
+  geom_line(group = 1)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+  labs(
+    x="Month",
+    y = "Average Riding Time",
+    title = "Average riding time for each month",
+    subtitle = "for each age_group (no odds)NYC\n"
+  )
+```
+
+```{r}
+no_odds %>% 
+  group_by(age_group) %>% 
+  index_by(week) %>% 
+  summarise(mean_time_ride = mean(time_ride)) %>% 
+  ggplot(aes(week, as.numeric(mean_time_ride)))+
+  facet_wrap(~age_group,ncol =1, scales = "free_y")+
+  geom_point(aes(col = age_group))+
+  geom_line(group = 1)+
+ scale_x_continuous(breaks = seq(0,52,5))+
+  labs(
+    x="Week",
+    y = "Average Riding Time",
+    col = "Age Group",
+    title = "Average riding time for each week",
+    subtitle = "for each age group(no odds)\n"
+  )
+```
+

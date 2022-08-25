@@ -46,7 +46,7 @@ ggplot() +
   geom_boxplot() + 
   labs(x = "\nYear",
      y = "time_ride",
-     title = "Distribution of ride time in 2018(90%)",
+     title = "Distribution of riding time in 2018(90%)",
      subtitle = "Data from citibike NYC\n")
 
 
@@ -56,7 +56,7 @@ nyc_bikes_short %>%
   geom_boxplot()+
   labs(x = "\nYear",
      y = "time_ride",
-     title = "Distribution of ride time in 2018(100%)",
+     title = "Distribution of riding time in 2018(100%)",
      subtitle = "Data from citiBike NYC\n")
  #the outliers are too crazy so I only included the 90% of the data to give 
 #a brief idea of how the ride time is like in the year of 2018. 
@@ -225,12 +225,13 @@ age_year
   mutate(time_ride = as.numeric(time_ride)) %>% 
   filter(time_ride < 17.94614) %>% 
 ggplot() + 
-  aes(as.factor(year), as.numeric(time_ride))+
+  aes(as.factor(age_group), as.numeric(time_ride))+
   geom_boxplot(aes(col = age_group)) + 
-  labs(x = "\nYear",
-     y = "time_ride",
-     title = "Distribution of ride time in 2018(90%)",
-     subtitle = "for each age group\n")
+  labs(x = "\nAge Group",
+     y = "Riding Time",
+     col = "Age Group",
+     title = "Distribution of ride time in 2018",
+     subtitle = "with 90% of the data\n")
 ```
 age month
 ```{r}
@@ -258,13 +259,14 @@ nyc_bikes_short %>%
   summarise(mean_time_ride = mean(time_ride)) %>% 
   ggplot(aes(wday, as.numeric(mean_time_ride)))+
   facet_wrap(~age_group,ncol =1, scales = "free_y")+
-  geom_point(aes(col = age_group))+
+  geom_point(aes(col = age_group), size = 2)+
   geom_line(aes(col = age_group),group = 1)+
   labs(
     x="Weekday",
     y = "Average Riding Time",
+    col = "Age Group",
     title = "Average riding time for each weekdays",
-    subtitle = "for each age group NYC\n"
+    subtitle = "for each age group \n"
   )
 ```
 ```{r}
@@ -280,8 +282,9 @@ nyc_bikes_short %>%
   labs(
     x="Week",
     y = "Average Riding Time",
-    title = "Average riding time for each month",
-    subtitle = "for each age group NYC\n"
+    col = "Age Group",
+    title = "Average riding time for each week",
+    subtitle = "for each age group\n"
   )
 ```
 ```{r}
@@ -327,7 +330,7 @@ leaflet() %>%
 ```{r}
  nyc_bikes_df %>% 
   mutate(week = week(start_time)) %>% 
-  filter(week == 46) %>% 
+  filter(week == 42) %>% 
   leaflet() %>% 
   addTiles() %>% 
   addMarkers(
@@ -345,7 +348,25 @@ nyc_bikes_short %>%
   summarise(mean = mean(time_ride)) %>% 
   arrange(desc(mean))
 ```
-‘Bike MS’ in New Jersey Raises $4.4M to Support Patient Care, Advance Research
-19 oct 
+We're mid-way through Women's Bike Month! october
+Did you know only a quarter of all bike trips in the U.S. are taken by women? At Citi Bike, we're dedicated to changing this. 
+This month we're giving all new riders their first trip free using code GIRLUP18, and donating $1 from each of these rides to Girl Up's SchoolCycle program to help provide bikes to girls around the world so they can safely access education.
+Join us in encouraging more ladies to get on bikes and give back to a great cause while doing it. 
 
+
+
+```{r}
+
+ nyc_bikes_df %>% 
+  mutate(week = week(start_time)) %>% 
+  filter(week == 4) %>% 
+  leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~end_long,
+    lat = ~end_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+```
 
