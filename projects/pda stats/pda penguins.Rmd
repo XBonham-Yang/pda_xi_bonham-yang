@@ -1,8 +1,10 @@
 ---
-title: "R Notebook"
+title: "Penguins PDA"
 output: html_notebook
 ---
-1. Exploratory analysis
+
+
+# 1. Exploratory analysis
 Explore the dataset using visualisations, and keep in mind the question you’re trying to answer above.
 
 Write a short summary of the results.
@@ -22,12 +24,12 @@ penguins %>%
   geom_jitter(aes(colour = species), alpha = 0.5)
 ```
 ```
-from the graph above, chinstrap has the longest bill and 
+From the graph above, chinstrap has the longest bill and 
 adelie has the shortest. gentoo and chinstrap looks very similar. with in each 
 species, the distribution seems normal.
 ```
 
-2. Summary statistics
+# 2. Summary statistics
 Calculate the following summary statistics to describe bill length for each species:
 
 measures of centrality (mean & median)
@@ -35,7 +37,7 @@ spread (standard deviation)
 skewness (you can use the skewness() function from the e1071 package)
 Write a short summary of the results.
 
-4.4 Summary statistics including measures of centrality, spread and skewness
+## 4.4 Summary statistics including measures of centrality, spread and skewness
 ```{r}
 penguins %>% 
   group_by(species) %>% 
@@ -45,21 +47,21 @@ penguins %>%
             )
 ```
 ```
-from the table above, the average bill_lenght matachs with the box_plot(Chinstrap has the longest then gentoo and adelie),
+From the table above, the average bill_lenght matachs with the box_plot(Chinstrap has the longest then gentoo and adelie),
 adelie and gentoo, chinstrp and adelie are symmtric,
 and gentoo are moderately right skewed 
 ```
 
 
-3. Hypothesis test & probability
+# 3. Hypothesis test & probability
 Perform a suitable hypothesis test to check whether the mean bill length of Gentoo is significantly longer than the mean bill length of Adelie.
 
 Visualise the p-value on the null distribution.
 Write an interpretation of your findings.
 
 
-4.1 Exploratory data analysis and targeted data analysis (hypothesis testing)
-4.3 Probability and probability distributions
+## 4.1 Exploratory data analysis and targeted data analysis (hypothesis testing)
+## 4.3 Probability and probability distributions
 
 My Null(H0) and alternative(H1) hypothesis as below, my alpha level is 0.05
 $$

@@ -1,0 +1,263 @@
+---
+title: "CitiBike Report"
+output: html_notebook
+---
+
+## 1. Loading data and tidying up 
+```{r}
+library(tsibbledata)
+library(tidyverse)
+library(lubridate)
+library(tsibble)
+library(leaflet)
+nyc_bikes_df <- nyc_bikes
+```
+
+```{r}
+nyc_bikes_short <- nyc_bikes_df %>% 
+  select(start_time, stop_time, birth_year, gender, type) %>% 
+  mutate(year = year(start_time),
+         month = month(start_time, label = TRUE),
+         day = as.Date(start_time),
+         wday  = wday(start_time,label = TRUE),
+         week = week(start_time),
+         time_ride = stop_time - start_time,
+         age = as.numeric(year - birth_year))
+
+bike_90 <-nyc_bikes_short%>%
+  index_by(year) %>%
+  summarise(p90 = quantile(time_ride, probs=0.9, na.rm=TRUE))
+
+nyc_bikes_short_90 <- nyc_bikes_short %>% 
+  mutate(time_ride = as.numeric(time_ride)) %>% 
+  filter(time_ride < bike_90$p90)
+#nyc_bikes_short doesn't have locations data 
+#nyc_bikes_short_90 has 90% of nyc_bikes_short based on riding time
+```
+## 2 Overall pattern of the year
+
+2.1 Daily distribution over 2018
+
+```{r}
+day_nyc <- nyc_bikes_short_90 %>% 
+  group_by(day) %>% 
+  count()
+
+day_nyc %>% 
+  ggplot(aes(day, n))+
+  geom_line()+
+  labs(x = "Days in 2018",
+       y = "Number of Bike Hire",
+       title = "Bike hire for each day in 2018\n")
+```
+From the grapg above, it suggestes that from Jan to Jul bike hiring increasing
+and the number of hiring each day starts to drop from summer to winter months.
+
+## 2.2 Monthly pattern over 2018
+```{r}
+month_nyc <- nyc_bikes_short_90 %>% 
+  group_by(month) %>% 
+  count()
+
+month_nyc %>% 
+  ggplot(aes(month, n))+
+  geom_line(group = 1, size = 1, col = "lightblue")+
+  geom_point(col = "steelblue")+
+  labs(
+    x="\nMonth",
+    y = "Number of Bike Hire",
+    title = "Number of bike hire for each month",
+    subtitle = "Data from 2018 citibike NYC\n"
+  )
+```
+From the monthly disribution, we can notice that the pattern of bike hiring is 
+very similar to the daily graph and suggests summer is the peak of the year for
+bike hiring.
+
+## weekly patterns 
+
+```{r}
+wday_nyc <- nyc_bikes_short_90%>% 
+  group_by(wday) %>% 
+  count()
+
+
+
+wday_nyc %>% 
+  ggplot(aes(wday, n))+
+  geom_point(size = 2, col = "steelblue")+
+  geom_line(group = 1, alpha = 0.7, col = "steelblue")+
+   labs(
+    x="Weekdays",
+    y = "Number of Bike Hire",
+    title = "Number of bike hire for each day of week",
+    subtitle = "Data from 2018 citibike NYC\n"
+  )
+```
+Across the whole year of 2018, the graph suggests that the numbers of bike hiring 
+is higher during the weekdays and it lower for weekends. It could be that the 
+most common usage are for commuting. 
+
+# 3. Compare between genders, ages and types.
+## 3.1 Gender overall and over the year 
+```{r}
+nyc_bikes_short_90 %>% 
+  group_by(gender) %>% 
+  count() %>% 
+  ggplot(aes(gender, n))+
+  geom_col(aes(fill = gender, col = gender))+
+  labs(x = "Gender",
+       y = "Number of bikr hire",
+       title = "Gender bike hire in 2018")
+```
+This graph shows an overview of bike hiring for each gender in 2018. 
+Male users are a lot higher than the other two groups. 
+
+```{r}
+gender_m <- nyc_bikes_short_90 %>% 
+  group_by(gender) %>% 
+  index_by(month) %>% 
+  count()
+
+gender_m %>% 
+  ggplot(aes(x = month, y = n))+
+  geom_line(aes(col = gender), group = 1)+
+  geom_point(aes(col = gender), size = 2)+
+  facet_wrap(~gender,ncol =1)+
+  labs(x = "Month",
+       y = "Number of bike hire",
+       title = "Bike hire pattern for each gender")
+```
+The hiring pattern seems to be similar as we descoved before. All groups have
+a peak around summer months and male hiring are a lot higher 
+than the other two groups.
+
+## 3.2 Age overall and over weekdays 
+
+I used age groups are as following: 18-30, 30-60, 60 and above.
+I am interested in mostly over 60 group as I think they will 
+show different pattern over a week as youger groups. 
+
+```{r}
+nyc_bikes_short_90 %>% 
+   mutate( age_group = case_when(age < 18 ~ "Under 18",
+                        age < 30 ~"18 to 30",
+                        age < 60 ~"30 to 60",
+                        TRUE ~"60 and above")) %>% 
+  group_by(age_group) %>% 
+  count() %>% 
+  ggplot(aes(age_group, n))+
+  geom_col(aes(fill = age_group, col = age_group))+
+  labs(x = "Age Group",
+       y = "Number of bikr hire",
+       fill = "Age Group",
+       col = "Age Group",
+       title = "Bike hiring for each age group")
+```
+The overall graph shows that most of the bike hiring are from 30-60 age
+group. However, it is the biggest age group. It is not very fair to use 
+this grouping. 
+
+
+```{r}
+nyc_bikes_short_90 %>% 
+   mutate( age_group = case_when(age < 18 ~ "Under 18",
+                        age < 30 ~"18 to 30",
+                        age < 60 ~"30 to 60",
+                        TRUE ~"60 and above")) %>% 
+  group_by(age_group) %>% 
+  index_by(wday) %>% 
+  count() %>% 
+  ggplot(aes(wday, n))+
+  geom_point(size = 2, aes(col = age_group))+
+  geom_line(group = 1, alpha = 0.7, aes(col = age_group))+
+  facet_wrap(~age_group, ncol = 1,scales = "free_y")+
+   labs(
+    x="Weekdays",
+    y = "Number of Bike Hire",
+    col = "Age Group",
+    fill = "Age Group",
+    title = "Bike hiring for each age group of weekdays"
+  )
+```
+Supprisingly, for all the groups it shows similar pattern as the whole data
+group(bike hiring are mostly in weekdays), Even for over 60 groups which 
+higher percentage of them among general population don't need to commute for
+work. 
+
+## 3.3 Types of customers, overall and over the year
+
+```{r}
+nyc_bikes_short_90 %>% 
+  group_by(type) %>% 
+  count() %>% 
+  ggplot(aes(type, n))+
+  geom_col(aes(fill = type, col = type))+
+  labs(x = "Type of costomers",
+       y = "Number of bikr hire",
+       col = "Costomer types",
+       fill = "Costomer types",
+       title = "Bike hire for differnt costomer types")
+```
+Most the customers are subscribers and only small percentages are not.
+
+```{r}
+type_d <- nyc_bikes_short_90 %>% 
+  group_by(type) %>% 
+  index_by(day) %>% 
+  count()
+
+type_d %>% 
+  ggplot(aes(x = day, y = n))+
+  geom_line(aes(col = type))+
+  facet_wrap(~type,ncol =1, scales = "free_y")+
+  labs(x = "Day",
+       y = "Number of bike hire",
+       col = "Type",
+       title = "Bike Hire Pattern for Different Types of Hiring")
+```
+This graph shows the patterns of bike hiring of differnt types over 2018.
+for subscribers, they have very similar pattern as the overall data group. 
+High peaks in summer and lower number of hiring in winter.
+However for "Cusomer" type, the pattern shows sharp increasing and sharp drop
+throughout the year and it also has time period that no "customer" are hiring 
+in a day. This is due to the fact that not many users are this type and 
+it not expected to see a steaby amount everyday. 
+
+# 4. Locations 
+
+```{r}
+nyc_bikes_df %>% 
+  group_by(start_long, start_lat) %>% 
+  count() %>% 
+  arrange(desc(n)) %>% 
+  head(5) %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+The spacial graph above shows the top 5 most popular stations,
+all of they are very close to big public transport stations and most of them
+are located in downtown. 
+
+
+```{r}
+nyc_bikes_df %>% 
+  filter(type == "Customer") %>% 
+leaflet() %>% 
+  addTiles() %>% 
+  addMarkers(
+    lng = ~start_long,
+    lat = ~start_lat,
+    clusterOptions = markerClusterOptions()
+  )
+```
+Assume that all the customer types are visitors, they should use the top 5 
+stations to travel into the city. From the graph above they do seems to use the 
+major stations more but there are small other stations been used. 
+
+
