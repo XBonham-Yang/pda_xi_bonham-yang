@@ -74,7 +74,7 @@ From the monthly disribution, we can notice that the pattern of bike hiring is
 very similar to the daily graph and suggests summer is the peak of the year for
 bike hiring.
 
-## weekly patterns 
+## 2.3 weekly patterns 
 
 ```{r}
 wday_nyc <- nyc_bikes_short_90%>% 
@@ -274,4 +274,4 @@ population
 The KPI is to increase bike hiring, we noticed the difference in male and female
 customers, the company should encourage female customers. Marketing among female
 population.
-Encourage visitors, having more bikes around big public stations. 
+Encourage visitors to hire citibike, we can have more bikes around big public stations. 
