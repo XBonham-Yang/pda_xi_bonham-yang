@@ -261,3 +261,17 @@ stations to travel into the city. From the graph above they do seems to use the
 major stations more but there are small other stations been used. 
 
 
+# 5 Data ethics 
+Data used is open data from CitiBike and collected with consent 
+
+Analysis only looks at trends rather than one spcific data 
+
+This set had a sample of 10 bike so it's not very representative for whole 
+population 
+
+
+# 6 Conclusion and recommendations 
+The KPI is to increase bike hiring, we noticed the difference in male and female
+customers, the company should encourage female customers. Marketing among female
+population.
+Encourage visitors, having more bikes around big public stations. 
