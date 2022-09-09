@@ -1,0 +1,102 @@
+id,quality,product_name,product_title,price_euro,weight,description,transaction_id,customer_id,date,customer_country,customer_age,customer_gender
+1010,E,Barbie,Summer Fun,5,146.9,Very Bad,35,76,2016-6-15,France,37,Male
+1010,E,Barbie,Summer Fun,5,146.9,Very Bad,63,98,2016-11-27,UK,45,Male
+1010,E,Barbie,Summer Fun,5,146.9,Very Bad,68,93,2017-10-8,Germany,42,Female
+896,C,Yo-yo,Junior,3.55,114.2,OK,NA,NA,NA,NA,NA,NA
+1011,C,Mr Potato Head,Jumbo Pack,6.45,283.41999999999996,OK,29,49,2019-10-12,Germany,37,Male
+1011,C,Mr Potato Head,Jumbo Pack,6.45,283.41999999999996,OK,91,42,2017-3-8,France,48,Male
+1006,E,My Little Pony,Figures collection,7.55,95.75,Very Bad,17,63,2016-6-13,USA,35.8,Female
+1006,E,My Little Pony,Figures collection,7.55,95.75,Very Bad,44,36,2016-3-3,Australia,39.666666666666664,Male
+1006,E,My Little Pony,Figures collection,7.55,95.75,Very Bad,81,30,2019-4-19,Australia,36,Male
+910,D,Yo-yo,Junior,2.5,114.2,Bad,NA,NA,NA,NA,NA,NA
+990,C,Cabbage Patch Kids,Ballerina Doll,150,123.75,OK,48,87,2016-10-1,USA,27,Female
+990,C,Cabbage Patch Kids,Ballerina Doll,150,123.75,OK,57,39,2018-1-24,UK,28,Female
+990,C,Cabbage Patch Kids,Ballerina Doll,150,123.75,OK,95,20,2018-1-10,USA,50,Male
+1017,C,Robot Dog,Batteries Included,45,269.56,OK,NA,NA,NA,NA,NA,NA
+994,B,Robot Dog,Batteries Included,50,269.56,Good,2,85,2020-9-8,France,24.666666666666668,Female
+994,B,Robot Dog,Batteries Included,50,269.56,Good,37,42,2017-2-21,France,48,Male
+994,B,Robot Dog,Batteries Included,50,269.56,Good,72,33,2016-7-18,New Zealand,35,Male
+994,B,Robot Dog,Batteries Included,50,269.56,Good,87,96,2019-6-24,UK,35.5,Male
+998,C,Lego Set,Star Wars,20.55,341.22999999999996,OK,13,92,2016-8-12,Germany,42,Female
+998,C,Lego Set,Star Wars,20.55,341.22999999999996,OK,66,41,2018-7-11,Spain,35,Female
+998,C,Lego Set,Star Wars,20.55,341.22999999999996,OK,79,94,2016-2-6,Spain,32,Male
+854,A,Yo-yo,Junior,5.95,114.2,Very Good,NA,NA,NA,NA,NA,NA
+876,B,Slinky Dog,Pull Toy,31.95,254.75,Good,NA,NA,NA,NA,NA,NA
+915,E,Yo-yo,Junior,1,114.2,Very Bad,NA,NA,NA,NA,NA,NA
+885,D,Slinky Dog,Pull Toy,25.45,254.75,Bad,NA,NA,NA,NA,NA,NA
+895,E,Slinky Dog,Pull Toy,20.99,254.75,Very Bad,NA,NA,NA,NA,NA,NA
+1016,B,Barbie,Summer Fun,8.95,146.9,Good,89,42,2018-6-3,France,48,Male
+1018,A,Rubik's Cube,The Original 3x3 Cube,10.55,169.69,Very Good,4,18,2018-3-10,France,35,Female
+1002,D,Cabbage Patch Kids,Ballerina Doll,100,123.75,Bad,61,73,2016-1-17,USA,24,Male
+1002,D,Cabbage Patch Kids,Ballerina Doll,100,123.75,Bad,67,92,2018-3-12,Germany,42,Female
+1002,D,Cabbage Patch Kids,Ballerina Doll,100,123.75,Bad,74,12,2018-12-10,New Zealand,47,Male
+1002,D,Cabbage Patch Kids,Ballerina Doll,100,123.75,Bad,76,21,2020-5-9,Spain,21,Male
+983,C,Nerf Gun,Zombie Strike,20,270.36,OK,49,67,2020-5-16,Australia,19,Female
+1003,D,Action Man,Action Pilot,8,357.7,Bad,22,17,2018-7-5,Australia,19,Female
+1003,D,Action Man,Action Pilot,8,357.7,Bad,55,9,2019-6-10,USA,36,Male
+1003,D,Action Man,Action Pilot,8,357.7,Bad,78,76,2019-3-23,France,37,Male
+985,E,Nerf Gun,Zombie Strike,15,270.36,Very Bad,59,31,2019-12-7,UK,26,Male
+1000,E,Mr Potato Head,Jumbo Pack,3,283.41999999999996,Very Bad,12,45,2020-1-17,Spain,26,Male
+1000,E,Mr Potato Head,Jumbo Pack,3,283.41999999999996,Very Bad,38,61,2019-8-6,Australia,19,Female
+1000,E,Mr Potato Head,Jumbo Pack,3,283.41999999999996,Very Bad,41,64,2016-5-15,Spain,26,Female
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,5,42,2018-4-17,France,48,Male
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,10,48,2020-6-23,France,38,Male
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,40,38,2016-11-26,USA,34,Male
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,54,67,2020-4-13,Australia,19,Female
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,65,44,2016-2-21,Spain,35,Female
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,82,89,2018-6-27,France,29,Male
+1004,A,Bop It,The Classic Game,12.5,211.69,Very Good,100,41,2016-4-20,Spain,35,Female
+1015,D,Robot Dog,Batteries Included,35,269.56,Bad,53,23,2019-8-12,New Zealand,36,Male
+1015,D,Robot Dog,Batteries Included,35,269.56,Bad,58,94,2020-3-28,Spain,32,Male
+832,A,Slinky Dog,Pull Toy,33.55,254.75,Very Good,NA,NA,NA,NA,NA,NA
+1012,D,My Little Pony,Figures collection,10,95.75,Bad,18,71,2018-3-19,New Zealand,42,Male
+1012,D,My Little Pony,Figures collection,10,95.75,Bad,30,67,2017-7-21,Australia,19,Female
+1008,B,Mr Potato Head,Jumbo Pack,7.5,283.41999999999996,Good,80,35,2016-8-12,USA,42,Female
+1014,B,Nerf Gun,Zombie Strike,22.45,270.36,Good,6,31,2020-9-18,UK,26,Male
+1014,B,Nerf Gun,Zombie Strike,22.45,270.36,Good,47,35,2016-11-24,USA,42,Female
+1013,C,Bop It,The Classic Game,9.5,211.69,OK,1,89,2016-10-16,France,29,Male
+1001,D,Nerf Gun,Zombie Strike,18.95,270.36,Bad,16,53,2016-5-13,France,19,Female
+1001,D,Nerf Gun,Zombie Strike,18.95,270.36,Bad,31,82,2016-2-28,France,24.666666666666668,Female
+1001,D,Nerf Gun,Zombie Strike,18.95,270.36,Bad,51,48,2019-7-4,France,38,Male
+1001,D,Nerf Gun,Zombie Strike,18.95,270.36,Bad,86,82,2019-11-4,France,24.666666666666668,Female
+1001,D,Nerf Gun,Zombie Strike,18.95,270.36,Bad,88,81,2019-1-28,UK,27,Female
+988,C,My Little Pony,Figures collection,12.95,95.75,OK,62,36,2019-5-20,Australia,39.666666666666664,Male
+993,B,Bop It,The Classic Game,11.5,211.69,Good,7,6,2016-9-8,France,24.666666666666668,Female
+993,B,Bop It,The Classic Game,11.5,211.69,Good,42,80,2016-9-19,Germany,37,Male
+993,B,Bop It,The Classic Game,11.5,211.69,Good,46,91,2017-8-1,New Zealand,37,Female
+993,B,Bop It,The Classic Game,11.5,211.69,Good,60,94,2017-4-18,Spain,32,Male
+993,B,Bop It,The Classic Game,11.5,211.69,Good,84,47,2017-7-27,France,38,Male
+987,A,Nerf Gun,Zombie Strike,25.95,270.36,Very Good,50,95,2020-1-11,USA,43,Female
+997,E,Bop It,The Classic Game,5.55,211.69,Very Bad,23,97,2019-4-4,Spain,37,Male
+997,E,Bop It,The Classic Game,5.55,211.69,Very Bad,28,24,2017-3-17,Australia,33,Male
+997,E,Bop It,The Classic Game,5.55,211.69,Very Bad,73,83,2020-6-6,Australia,50,Male
+1022,A,Cabbage Patch Kids,Ballerina Doll,250,123.75,Very Good,27,13,2020-11-28,Germany,37,Male
+1022,A,Cabbage Patch Kids,Ballerina Doll,250,123.75,Very Good,32,2,2020-9-2,USA,35.8,Female
+989,A,Mr Potato Head,Jumbo Pack,8,283.41999999999996,Very Good,21,93,2020-5-16,Germany,42,Female
+989,A,Mr Potato Head,Jumbo Pack,8,283.41999999999996,Very Good,45,91,2018-7-14,New Zealand,37,Female
+989,A,Mr Potato Head,Jumbo Pack,8,283.41999999999996,Very Good,52,66,2019-6-24,USA,49,Female
+989,A,Mr Potato Head,Jumbo Pack,8,283.41999999999996,Very Good,77,81,2020-7-11,UK,27,Female
+996,C,Action Man,Action Pilot,9.65,357.7,OK,34,63,2020-4-12,USA,35.8,Female
+996,C,Action Man,Action Pilot,9.65,357.7,OK,36,13,2016-2-19,Germany,37,Male
+996,C,Action Man,Action Pilot,9.65,357.7,OK,56,61,2016-12-10,Australia,19,Female
+996,C,Action Man,Action Pilot,9.65,357.7,OK,93,26,2020-11-4,UK,24,Female
+999,E,Rubik's Cube,The Original 3x3 Cube,3,169.69,Very Bad,24,2,2020-12-18,USA,35.8,Female
+999,E,Rubik's Cube,The Original 3x3 Cube,3,169.69,Very Bad,90,40,2017-8-14,Spain,25,Male
+977,B,Action Man,Action Pilot,10,357.7,Good,26,2,2016-11-16,USA,35.8,Female
+890,B,Yo-yo,Junior,4,114.2,Good,NA,NA,NA,NA,NA,NA
+980,D,Barbie,Summer Fun,6.55,146.9,Bad,39,70,2017-8-16,USA,18,Female
+1021,A,Barbie,Summer Fun,10.95,146.9,Very Good,25,49,2018-9-1,Germany,37,Male
+1005,E,Cabbage Patch Kids,Ballerina Doll,50,123.75,Very Bad,43,99,2019-7-27,Spain,49,Female
+1005,E,Cabbage Patch Kids,Ballerina Doll,50,123.75,Very Bad,64,22,2018-4-9,France,20,Female
+1005,E,Cabbage Patch Kids,Ballerina Doll,50,123.75,Very Bad,75,98,2019-4-26,UK,45,Male
+995,C,Barbie,Summer Fun,7.5,146.9,OK,8,71,2019-4-19,New Zealand,42,Male
+995,C,Barbie,Summer Fun,7.5,146.9,OK,9,61,2017-4-10,Australia,19,Female
+995,C,Barbie,Summer Fun,7.5,146.9,OK,83,50,2020-10-24,New Zealand,37,Female
+995,C,Barbie,Summer Fun,7.5,146.9,OK,94,13,2019-3-23,Germany,37,Male
+1007,D,Mr Potato Head,Jumbo Pack,4,283.41999999999996,Bad,11,17,2019-5-11,Australia,19,Female
+881,C,Slinky Dog,Pull Toy,29.75,254.75,OK,NA,NA,NA,NA,NA,NA
+1009,A,Lego Set,Star Wars,25.95,341.22999999999996,Very Good,33,37,2017-6-18,New Zealand,33,Male
+1009,A,Lego Set,Star Wars,25.95,341.22999999999996,Very Good,85,67,2016-11-23,Australia,19,Female
+1009,A,Lego Set,Star Wars,25.95,341.22999999999996,Very Good,99,94,2020-10-16,Spain,32,Male
+NA,NA,NA,NA,NA,NA,NA,NA,84,NA,New Zealand,37,Female
+NA,NA,NA,NA,NA,NA,NA,NA,43,NA,UK,42,Female
