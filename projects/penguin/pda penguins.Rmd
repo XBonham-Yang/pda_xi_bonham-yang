@@ -108,3 +108,21 @@ It is a lot less than our alpha level,
 the difference is significant and we reject H0 and 
 found evidence to support H1. 
 ```
+
+Create a correlation matrix using GGally::ggcorr() that shows the correlation between 
+bill length, bill depth, flipper length, and body mass across species.
+(Hint: you can add correlation coefficient labels to your plot if you look at the ?ggcorr help file)
+
+Write a short summary of your results.
+
+```{r}
+penguins %>% 
+  select("bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g") %>% 
+GGally::ggcorr(label = TRUE)
+```
+```
+body mass and flipper length has a very strong possitive correlation, 
+body mass also has strong possitive correlation with bill length, 
+flipper length has a strong positive correlation with bill length, 
+bill length has a week negtive correlation with bill depth. 
+```
