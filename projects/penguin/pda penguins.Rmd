@@ -126,3 +126,5 @@ body mass also has strong possitive correlation with bill length,
 flipper length has a strong positive correlation with bill length, 
 bill length has a week negtive correlation with bill depth. 
 ```
+4.5 Concept of correlation and correlation matrices
+4.8 Documenting analyses
