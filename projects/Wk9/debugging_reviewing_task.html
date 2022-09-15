@@ -2870,10 +2870,9 @@ exactly then will be ‘high’, if it’s 10,000 exactly then will be
 
 energy_scotland_rating &lt;- bind_cols(energy_scotland, rating = rating)</code></pre>
 <p>This code runs but very long and complicatied. I will mutate the data
-set we already have and use case when.</p>
-</div>
-<div id="answer-2" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Answer 2</h1>
+set we already have and use case when. if_else works greatly if there’s
+only two conditions to check, case_when can handle more in a clear way.
+# Answer 2</p>
 <pre class="r"><code>energy_scotland_rating &lt;- energy_scotland %&gt;% 
   mutate(rating = case_when(energy_prod &gt; 20000 ~ &quot;very high&quot;,
                            energy_prod &gt; 10000 ~ &quot;high&quot;,
@@ -2881,8 +2880,8 @@ set we already have and use case when.</p>
                            energy_prod &gt; 2000 ~ &quot;low&quot;,
                            TRUE ~ &quot;very low&quot;))</code></pre>
 </div>
-<div id="task-3" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Task 3</h1>
+<div id="task-3" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Task 3</h1>
 <p>Goal: create a plot which shows how the energy production for the
 sectors renewables, gas and pumped hydro compare over time.</p>
 <pre class="r"><code>renewable &lt;- energy_scotland %&gt;%
@@ -2905,8 +2904,8 @@ ggplot() +
 <p>This code runs but very complicated, I will use the data set we
 already have to plot instead of creating new data frames.</p>
 </div>
-<div id="answer-3" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Answer 3</h1>
+<div id="answer-3" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Answer 3</h1>
 <pre class="r"><code>energy_scotland %&gt;%
   filter(sector %in% c(&quot;Renewables&quot;, &quot;Gas&quot;, &quot;Pumped hydro&quot;)) %&gt;% 
   ggplot(aes(year, energy_prod)) +
@@ -2915,25 +2914,27 @@ already have to plot instead of creating new data frames.</p>
   labs(title = &quot;Energy production in Scotland over time split by sector&quot;, x =&quot;Year&quot;, y = &quot;Energy production&quot;, 
        col = &quot;Sector&quot;)</code></pre>
 </div>
-<div id="task-4" class="section level1" number="7">
-<h1><span class="header-section-number">7</span> Task 4</h1>
+<div id="task-4" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Task 4</h1>
 <p>Goal: calculate the average energy production for the Coal, Gas, and
 Oil sectors across the time period in the data.</p>
 <pre class="r"><code>energy_scotland %&gt;%
   filter(sector == c(&quot;Coal&quot;, &quot;Gas&quot;, &quot;Oil&quot;)) %&gt;%
   group_by(sector) %&gt;%
   summarise(avg_energy_prod = mean(energy_prod))</code></pre>
-<p>This code missed a lot of rows of data by using == in filter</p>
+<p>This code missed a lot of rows of data by using == in filter ==
+checks if two things are the same, %in% checks if first thing is
+contained in the second thing</p>
 </div>
-<div id="answer-4" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Answer 4</h1>
+<div id="answer-4" class="section level1" number="7">
+<h1><span class="header-section-number">7</span> Answer 4</h1>
 <pre class="r"><code>energy_scotland %&gt;%
   filter(sector %in% c(&quot;Coal&quot;, &quot;Gas&quot;, &quot;Oil&quot;)) %&gt;%
   group_by(sector) %&gt;%
   summarise(avg_energy_prod = mean(energy_prod))</code></pre>
 </div>
-<div id="task-5" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Task 5</h1>
+<div id="task-5" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Task 5</h1>
 <pre class="r"><code>student &lt;- tibble(
   Name = c(&quot;Brian&quot;, &quot;David&quot;, &quot;Karen&quot;),
   age = c(25, 56, 40),
@@ -2964,16 +2965,16 @@ names were in the clean form, didn’t use mutate to change the location
 column missing %&gt;% the regx used was wrong, a-z needs to be in [] for
 all letter from a to z</p>
 </div>
-<div id="answer-5" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Answer 5</h1>
+<div id="answer-5" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Answer 5</h1>
 <pre class="r"><code>student %&gt;%
   janitor::clean_names() %&gt;%
   select(name, location, email_address) %&gt;%
   mutate(location = str_to_lower(location)) %&gt;% 
   mutate(valid_email = str_detect(email_address, &quot;@[a-z.]&quot;))</code></pre>
 </div>
-<div id="task-6" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> Task 6</h1>
+<div id="task-6" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Task 6</h1>
 <p>Goal: create a function to work on the all_salaries dataframe (or a
 similar dataframe that has a column <code>salary</code> and
 <code>job_area</code>). The function should take in the dataframe
@@ -2993,10 +2994,10 @@ would return the following output:</p>
 
 subsetting_salaries(CodeClanData::all_salaries, Human Resources, 30000)</code></pre>
 <p>This code used some bad names, no returns of the function, inputs are
-in wrong type</p>
-</div>
-<div id="answer-6" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Answer 6</h1>
+in wrong type assigned data and data1 but returns nothing, input should
+be a string, R doesn’t recognize words without “” as strings， for the
+wrong function, in data, it selected only job_area, so for data1, it
+won’t give you anything # Answer 6</p>
 <pre class="r"><code>subsetting_salaries &lt;- function(dataframe_input,job_area_input,salary_input){ 
  dataframe_input %&gt;% filter(job_area == job_area_input, 
                             savings &gt; salary_input)
@@ -3004,8 +3005,8 @@ in wrong type</p>
 
 subsetting_salaries(all_salaries, &quot;Human Resources&quot;, 30000)</code></pre>
 </div>
-<div id="pda-outcomes-covered-by-this-task" class="section level1" number="13">
-<h1><span class="header-section-number">13</span> PDA Outcomes covered
+<div id="pda-outcomes-covered-by-this-task" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> PDA Outcomes covered
 by this task</h1>
 <p>From Working with Data (J4YB 35):</p>
 <ul>

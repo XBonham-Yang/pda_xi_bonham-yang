@@ -24,9 +24,8 @@ penguins %>%
   geom_jitter(aes(colour = species), alpha = 0.5)
 ```
 ```
-From the graph above, chinstrap has the longest bill and 
-adelie has the shortest. gentoo and chinstrap looks very similar. with in each 
-species, the distribution seems normal.
+From the graph above, on average, chinstrap has the longest bill and 
+adelie has the shortest. gentoo and chinstrap looks very similar. 
 ```
 
 # 2. Summary statistics
@@ -48,8 +47,10 @@ penguins %>%
 ```
 ```
 From the table above, the average bill_lenght matachs with the box_plot(Chinstrap has the longest then gentoo and adelie),
-adelie and gentoo, chinstrp and adelie are symmtric,
-and gentoo are moderately right skewed 
+for the distribution, chinstrp and adelie are symmtric,
+and gentoo are moderately right skewed,
+on average, chinstrap has the longest bill and 
+adelie has the shortest. gentoo and chinstrap looks very similar. 
 ```
 
 
@@ -72,14 +73,26 @@ $$
 
 ```{r}
 null_distribution <- penguins %>% 
-  filter(species %in% c("Adelie", "Gentoo")) %>% 
-  specify(bill_length_mm ~ species) %>% 
-  hypothesise(null = 'independence') %>% 
-  generate(rep = 1000, type = 'permute') %>% 
-  calculate(stat = "diff in means", order = c('Gentoo', 'Adelie'))
-
+  filter(species %in% c("Adelie", "Gentoo")) %>%  #it's only comparing adelie and gentoo
+  specify(bill_length_mm ~ species) %>%           ##it is the relationship between bill length and species we are testing, 
+  hypothesise(null = 'independence') %>% #the null hypothesis is there is no relationship
+  generate(rep = 1000, type = 'permute') %>% #detaching the species from rows and then randomly assigning them back.
+  calculate(stat = "diff in means", order = c('Gentoo', 'Adelie'))#our sample stat is mean of gentoo - mean of adelie
 null_distribution
 ```
+
+null_distribution <- penguins %>% 
+  filter(species %in% c("Adelie", "Gentoo")) %>%  #it's only comparing adelie and gentoo
+  
+  specify(bill_length_mm ~ species) %>%   #it is the relationship between bill length and species we are testing, 
+  
+  hypothesise(null = 'independence') %>% #the null hypothesis is there is no relationship
+  
+  
+  generate(rep = 1000, type = 'permute') %>% #detaching the species from rows and then randomly assigning them back.
+  
+  
+  calculate(stat = "diff in means", order = c('Gentoo', 'Adelie'))#our sample stat is mean of gentoo - mean of adelie
 
 
 

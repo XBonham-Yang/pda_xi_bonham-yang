@@ -75,7 +75,8 @@ energy_scotland_rating <- bind_cols(energy_scotland, rating = rating)
 ```
 This code runs but very long and complicatied. I will mutate the data set
 we already have and use case when. 
-
+if_else works greatly if there's only two conditions to check, case_when can handle 
+more in a clear way. 
 # Answer 2
 
 ```{r,eval = FALSE}
@@ -141,6 +142,8 @@ energy_scotland %>%
   summarise(avg_energy_prod = mean(energy_prod))
 ```
 This code missed a lot of rows of data by using == in filter
+== checks if two things are the same, %in% checks if first thing is contained 
+in the second thing 
 
 # Answer 4 
 ```{r, eval = FALSE}
@@ -202,7 +205,10 @@ subsetting_salaries <- function(dataframe_input,job_area_input,salary_input){
 subsetting_salaries(CodeClanData::all_salaries, Human Resources, 30000)
 ```
 This code used some bad names, no returns of the function, inputs are in wrong type
-
+assigned data and data1 but returns nothing, input should be a string, R doesn't
+recognize words without "" as strings， 
+for the wrong function, in data, it selected only job_area, so for data1, it won't give
+you anything 
 # Answer 6 
 ```{r, eval = FALSE}
 subsetting_salaries <- function(dataframe_input,job_area_input,salary_input){ 
