@@ -130,3 +130,80 @@ clean_mete %>%
 ```
 #this plot links back to one of the analysis question,(Find the average mass of meteorites that were recorded falling, vs. those which were just found.)
 #It shows that on average, meteorites fell was a lot smaller than the ones are found.
+
+
+week 11 
+Based on the mass and year, create a decision tree model of your meteorites data which predicts whether a meteorite was seen falling, or was discovered after its impact (fell/found).
+
+First, you want to convert any character column to a factor. Next (and most importantly) split your dataset into training and testing datasets. Then create a decision tree with rpart and plot it using rpart.plot. Finally, test and add your predictions to your data, and create a confusion matrix.
+
+```{r}
+library(rpart)
+library(rpart.plot)
+library(dplyr)
+```
+
+```{r}
+clean_mete %>% head()
+mete_tree <- clean_mete %>% select(mass_g, year,fall) %>% 
+  mutate(fall = factor(fall, levels = c("Found", "Fell"), labels = c("Found", "Fell"))) %>% 
+   na.omit()
+mete_tree
+```
+```{r}
+set.seed(19)
+
+n_data <- nrow(mete_tree)
+
+test_index <- sample(1:n_data, size = n_data*0.2)
+
+# create test set
+test  <- slice(mete_tree, test_index)
+
+# create training set
+train <- slice(mete_tree, -test_index)
+```
+
+```{r}
+test %>%
+ janitor::tabyl(fall)
+train %>%
+ janitor::tabyl(fall)
+```
+
+```{r}
+mete_fit <- rpart(
+  formula = fall ~ ., 
+  data = train, 
+  method = 'class'
+)
+
+rpart.plot(mete_fit, 
+           yesno = 2, 
+           fallen.leaves = TRUE, 
+           faclen = 6, 
+           digits = 4)
+```
+
+```{r}
+library(modelr)
+
+# add the predictions
+mete_test_pred <- test %>%
+  add_predictions(mete_fit, type = 'class')
+```
+
+```{r}
+library(yardstick)
+conf_mat <- mete_test_pred %>%
+              conf_mat(truth = fall, estimate = pred)
+
+conf_mat
+```
+```{r}
+accuracy <- mete_test_pred %>%
+ accuracy(truth = fall, estimate = pred)
+
+accuracy 
+```
+
