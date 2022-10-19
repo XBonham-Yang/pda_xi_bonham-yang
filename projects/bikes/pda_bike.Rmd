@@ -8,6 +8,7 @@ library(tidyverse)
 library(lubridate)
 library(tsibble)
 nyc_bikes_df <- nyc_bikes
+nyc_bikes_df %>% summary()
 ```
 
 What is the pattern of bike hires over time (e.g. within a year, month, week, or day)?

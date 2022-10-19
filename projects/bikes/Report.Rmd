@@ -2,6 +2,30 @@
 title: "CitiBike Report"
 output: html_notebook
 ---
+## About Citi Bike 
+```
+Citi Bike is a privately owned public bicycle sharing system serving the New York City,Brooklyn, Manhattan, Queens, Jersey City, New Jersey, and Hoboken, New Jersey. Named after lead sponsor Citigroup.
+```
+## Data collection detail in the next doocument submitted 
+
+## Data visualisation as a tool for decision-making
+```
+This report helps to identify the patterns of bike usage in different 
+groups and types of customers. It prvides insights and suggestions of 
+how citi bike can imcrease their bike hiring. 
+```
+## Data types
+```
+There are different types of data in this data set.
+Numerical, POSIXct(Datetime) and Factors 
+```
+
+## Data quality and data bias 
+```
+The data set is clean.
+This data only recoreded 10 bikes. 
+Data was collected with no personal identifible information 
+```
 
 ## 1. Loading data and tidying up 
 ```{r}

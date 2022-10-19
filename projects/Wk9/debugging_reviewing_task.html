@@ -2997,10 +2997,12 @@ subsetting_salaries(CodeClanData::all_salaries, Human Resources, 30000)</code></
 in wrong type assigned data and data1 but returns nothing, input should
 be a string, R doesn’t recognize words without “” as strings， for the
 wrong function, in data, it selected only job_area, so for data1, it
-won’t give you anything # Answer 6</p>
-<pre class="r"><code>subsetting_salaries &lt;- function(dataframe_input,job_area_input,salary_input){ 
+won’t give you anything Used Saving to compare instead of salary as the
+question asked for. # Answer 6</p>
+<pre class="r"><code>subsetting_salaries &lt;- function(dataframe_input,job_area_input,salary_input){
+  
  dataframe_input %&gt;% filter(job_area == job_area_input, 
-                            savings &gt; salary_input)
+                            salary &gt; salary_input)
 }
 
 subsetting_salaries(all_salaries, &quot;Human Resources&quot;, 30000)</code></pre>
