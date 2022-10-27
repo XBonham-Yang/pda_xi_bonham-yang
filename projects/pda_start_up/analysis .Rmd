@@ -184,7 +184,27 @@ rpart.plot(mete_fit,
            faclen = 6, 
            digits = 4)
 ```
+```
+Taking all of our data, there are 15.47% likely to be fell.
 
+If the year is 1936 or later, which is 78.89% of the data, there are 7.9% chance to be fell.
+
+If the year is before 1936  and mass is greater than 613,000g, (1.01% of the data), are less than 0.001% likely to be fell. 
+
+If the year is before 1836, mass between 10,800g and 613,000g(8.85% of the data) are 28.45% likely to  be fell.
+
+If the year is before 1838 and the mass is between 55,500g and 613,000g (0.34% of the data), it's 23.08% likely to be fell.
+
+If the year is earlier than 1838, and weight is less than 55,500g (57% of the data), are 95.45% likely to be fell. 
+
+If the year is between 1884 and 1919, and the mass is between 1313 g and 10,800g, (3.12% of the data), it's 35% likely to be fell. 
+
+If the year is between 1919 and 1936, the mass is between 1313 and 10,800g (2.23% of the data), are 55.81% likely to fell. 
+
+If the year is between 1884 and 1936, and mass is less than 1313g,(0.78% of the data) are 70% likely to be fell.
+
+If the year is before 1884,mass less than 10,800g(4.21% of the data), are 76.54% likely to be fell
+```
 ```{r}
 library(modelr)
 
@@ -200,10 +220,18 @@ conf_mat <- mete_test_pred %>%
 
 conf_mat
 ```
+
+```
+This model performs quite good, it's mostly correct. 799 true possitive and 43 true negative 
+with 120 errors. 
+```
+
 ```{r}
 accuracy <- mete_test_pred %>%
  accuracy(truth = fall, estimate = pred)
 
 accuracy 
 ```
-
+```
+It's 87.53% correct 
+```

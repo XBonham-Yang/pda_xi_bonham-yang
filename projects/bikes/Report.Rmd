@@ -6,18 +6,36 @@ output: html_notebook
 ```
 Citi Bike is a privately owned public bicycle sharing system serving the New York City,Brooklyn, Manhattan, Queens, Jersey City, New Jersey, and Hoboken, New Jersey. Named after lead sponsor Citigroup.
 ```
+## Business requirements
+```
+Steps to take:
+1. Data exploring and cleaning 
+2. Data analysis
+3. Draft graphs and finalis graphs 
+4.Interprate graphs with business insghts 
+
+KPI:
+Increase bike hiring 
+
+Questions to answer:
+1.What is the pattern of bike hires over time (e.g. within a year, month, week, or day)?
+2.Do bike hire patterns differ between bike rider demographics? (e.g. gender, type of trip, age)
+3.What is the geographical spread of the start points of bike hires?
+```
+
 ## Data collection detail in the next doocument submitted 
 
 ## Data visualisation as a tool for decision-making
 ```
-This report helps to identify the patterns of bike usage in different 
-groups and types of customers. It prvides insights and suggestions of 
+Used data to identify the patterns of bike usage in different groups and types of customers. It prvides insights and suggestions of 
 how citi bike can imcrease their bike hiring. 
 ```
 ## Data types
 ```
 There are different types of data in this data set.
-Numerical, POSIXct(Datetime) and Factors 
+Numerical: Numbers such as Year of birth 
+POSIXct(Datetime):Time and date informations 
+Factors: Categories,such as bike ID, there are 10 differnert bike ID   
 ```
 
 ## Data quality and data bias 
@@ -25,6 +43,14 @@ Numerical, POSIXct(Datetime) and Factors
 The data set is clean.
 This data only recoreded 10 bikes. 
 Data was collected with no personal identifible information 
+```
+## Preparing data for visualisation 
+```
+Extract year, month, day, weekdays ect. from date for analysis the pattern over time.
+
+There are many really high values in the ridng time, so I only took the lowest 90% of the riding time data.
+
+Time ride was not given as a number so I changed it to numerical for comparing with other numbers.
 ```
 
 ## 1. Loading data and tidying up 
